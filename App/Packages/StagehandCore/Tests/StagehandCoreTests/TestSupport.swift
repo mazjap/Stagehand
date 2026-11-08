@@ -35,8 +35,7 @@ final class FakeTextMeasurer: TextMeasurer {
         let lineHeight = font.size * 1.2
         return TextMeasurement(
             size: CGSize(width: min(width, words.reduce(0, +)), height: Double(lines) * lineHeight + Double(lines - 1) * lineSpacing),
-            lineCount: lines,
-            widestWord: words.max() ?? 0
+            lineCount: lines
         )
     }
 }

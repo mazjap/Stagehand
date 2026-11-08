@@ -270,6 +270,8 @@ private struct DeviceLayer: View {
     }
 }
 
+/// Text wraps to as many lines as it needs at its box's width. It takes its full height whatever the box's (which
+/// is measured to match), so a line is never cut off or turned into an ellipsis.
 private struct TextLayer: View {
     let text: ResolvedText
     
@@ -280,7 +282,8 @@ private struct TextLayer: View {
             .lineSpacing(text.lineSpacing)
             .foregroundStyle(text.color.color)
             .multilineTextAlignment(text.alignment.textAlignment)
-            .lineLimit(text.lineLimit)
+            .fixedSize(horizontal: false, vertical: true)
+            .frame(width: text.frame.width)
             .frame(
                 width: text.frame.width,
                 height: text.frame.height,

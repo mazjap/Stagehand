@@ -10,12 +10,12 @@ extension Style {
         let glow = Glow(colorToken: "glow", blur: 0.07, opacity: 0.75, spread: 1.02)
         
         let phoneText = (
-            primary: TextPlacement(position: NormPoint(x: 0.5, y: 0.055), width: 0.84, lineLimit: 2),
-            secondary: TextPlacement(position: NormPoint(x: 0.5, y: 0.175), width: 0.8, lineLimit: 2)
+            primary: TextPlacement(position: NormPoint(x: 0.5, y: 0.055), width: 0.84),
+            secondary: TextPlacement(position: NormPoint(x: 0.5, y: 0.175), width: 0.8)
         )
         let padText = (
-            primary: TextPlacement(position: NormPoint(x: 0.5, y: 0.05), width: 0.8, lineLimit: 1),
-            secondary: TextPlacement(position: NormPoint(x: 0.5, y: 0.14), width: 0.76, lineLimit: 2)
+            primary: TextPlacement(position: NormPoint(x: 0.5, y: 0.05), width: 0.8),
+            secondary: TextPlacement(position: NormPoint(x: 0.5, y: 0.14), width: 0.76)
         )
         
         func phone(_ device: DevicePlacement) -> TemplateLayout {
@@ -27,14 +27,14 @@ extension Style {
         }
         
         let watch = TemplateLayout(
-            primary: TextPlacement(position: NormPoint(x: 0.5, y: 0.04), width: 0.88, lineLimit: 2),
-            secondary: TextPlacement(position: NormPoint(x: 0.5, y: 0.24), width: 0.84, lineLimit: 1),
+            primary: TextPlacement(position: NormPoint(x: 0.5, y: 0.04), width: 0.88),
+            secondary: TextPlacement(position: NormPoint(x: 0.5, y: 0.24), width: 0.84),
             device: DevicePlacement(position: NormPoint(x: 0.5, y: 0.66), width: 0.7, bezel: .none, bareCornerRadius: 0.22)
         )
         
         let mac = TemplateLayout(
-            primary: TextPlacement(position: NormPoint(x: 0.5, y: 0.06), width: 0.7, lineLimit: 1),
-            secondary: TextPlacement(position: NormPoint(x: 0.5, y: 0.16), width: 0.6, lineLimit: 1),
+            primary: TextPlacement(position: NormPoint(x: 0.5, y: 0.06), width: 0.7),
+            secondary: TextPlacement(position: NormPoint(x: 0.5, y: 0.16), width: 0.6),
             device: DevicePlacement(position: NormPoint(x: 0.5, y: 0.6), width: 0.72, bezel: .none, glow: glow, bareCornerRadius: 0.012)
         )
         

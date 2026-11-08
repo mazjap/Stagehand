@@ -114,13 +114,6 @@ struct SlideInspector: View {
                                     .font(.caption)
                                     .foregroundStyle(.orange)
                             }
-                            
-                            if let shrinking = coordinator.textShrinking(role) {
-                                Label(shrinkingMessage(shrinking, slide: slide), systemImage: "textformat.size.smaller")
-                                    .font(.caption)
-                                    .foregroundStyle(.secondary)
-                                    .fixedSize(horizontal: false, vertical: true)
-                            }
                         }
                     }
                 }
@@ -211,14 +204,7 @@ struct SlideInspector: View {
     private func extraElements(of resolved: (template: Template?, layout: TemplateLayout, fellBack: Bool), kind: TemplateElement.Kind) -> [TemplateElement] {
         resolved.template?.elements.filter { $0.kind == kind && resolved.layout.extras[$0.id] != nil } ?? []
     }
-    
-    private func shrinkingMessage(_ shrinking: (percent: Int, cause: Slide), slide: Slide) -> String {
-        if shrinking.cause.id == slide.id {
-            return "Shrunk to \(shrinking.percent)% to fit."
-        }
-        
-        return "Shrunk to \(shrinking.percent)% so every slide matches: \u{201C}\(shrinking.cause.title)\u{201D} needs it. Template Set › Auto-fit can shrink only the slides that need it."
-    }
+
 }
 
 /// The capture this cell shows, and what can be done with it.

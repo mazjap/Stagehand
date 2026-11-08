@@ -61,7 +61,7 @@ A **template** places three standard elements, **Primary Text**, **Secondary Tex
 
 Fonts, sizes, colors, letter case, tracking and line spacing belong to the template set (the **Template Set** inspector), so every template shares them. Sizes are in **points on the screenshot** (a point is a pixel of the exported image, as in design apps), and every slider has a field to type a number. Fonts you choose are embedded in the project.
 
-**Auto-fit** shrinks text that doesn't fit its box. **Text Size: Same on Every Slide** gives every slide on a device the size the longest text fits at; **Shrink Only to Fit** shrinks only the slides that need it. The **Slide** inspector says when, and why, a slide's text was shrunk. The template editor draws its placeholder at the size its slides use on that device, and the **Template** inspector warns when the placeholder is too long for it.
+Text is always drawn at its size, on every slide and in the template editor, and **wraps** to as many lines as it needs at its box's width: a text box only has a width, and grows (away from its anchor point) to fit its lines. A single word wider than its box breaks across lines, so keep sizes and box widths in proportion to your longest words.
 
 ### Bezels
 

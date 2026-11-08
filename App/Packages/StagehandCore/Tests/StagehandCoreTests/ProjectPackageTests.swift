@@ -144,7 +144,8 @@ import Testing
     }
     
     /// Every cell format 2 drew for the format 2 fixture (recorded with format 2's resolver, in
-    /// `project-v2-geometry.json`) draws in the same place after migrating.
+    /// `project-v2-geometry.json`) draws in the same place after migrating. Text boxes compare by their position and
+    /// width: their height now follows the lines the text wraps to, where format 2's followed a line limit.
     @Test func aMigratedFormatTwoProjectDrawsEveryCellTheSame() throws {
         let project = try migratedFormatTwo()
         let rows = try #require(try JSONSerialization.jsonObject(with: TestResources.data("formats/project-v2-geometry.json")) as? [[String: Any]])
@@ -162,8 +163,8 @@ import Testing
             #expect(close([device.center.x, device.center.y], row["deviceCenter"]), "\(context): device center")
             #expect(close([device.size.width, device.size.height], row["deviceSize"]), "\(context): device size")
             #expect(close([device.rotation], [row["deviceRotation"]!]), "\(context): rotation")
-            #expect(close(scene.primary.map { [$0.frame.minX, $0.frame.minY, $0.frame.width, $0.frame.height] } ?? [], row["primary"]), "\(context): primary")
-            #expect(close(scene.secondary.map { [$0.frame.minX, $0.frame.minY, $0.frame.width, $0.frame.height] } ?? [], row["secondary"]), "\(context): secondary")
+            #expect(close(scene.primary.map { [$0.frame.minX, $0.frame.minY, $0.frame.width] } ?? [], (row["primary"] as? [Double])?.prefix(3).map { $0 }), "\(context): primary")
+            #expect(close(scene.secondary.map { [$0.frame.minX, $0.frame.minY, $0.frame.width] } ?? [], (row["secondary"] as? [Double])?.prefix(3).map { $0 }), "\(context): secondary")
             #expect((device.glow != nil) == (row["glow"] as? Bool), "\(context): glow")
         }
     }

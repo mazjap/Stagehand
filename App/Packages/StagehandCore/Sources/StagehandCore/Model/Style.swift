@@ -23,12 +23,6 @@ public struct Style: Codable, Hashable, Sendable, Identifiable {
     /// sees each template's changes on their own.
     public var templates: [Template]
     
-    /// Auto-fit never shrinks text below this fraction of the style's size. Below it, the slide is flagged.
-    public var autoFitMinimum: Double
-    
-    /// Whether auto-fit gives every slide in a lineup the same text size, or shrinks only the slides that need it.
-    public var autoFitScope: AutoFitScope
-    
     public init(
         id: UUID = UUID(),
         name: String,
@@ -37,9 +31,7 @@ public struct Style: Codable, Hashable, Sendable, Identifiable {
         background: Varying<Fill>,
         primary: TextStyle,
         secondary: TextStyle,
-        templates: [Template],
-        autoFitMinimum: Double = 0.6,
-        autoFitScope: AutoFitScope = .lineup
+        templates: [Template]
     ) {
         self.id = id
         self.name = name
@@ -49,8 +41,6 @@ public struct Style: Codable, Hashable, Sendable, Identifiable {
         self.primary = primary
         self.secondary = secondary
         self.templates = templates
-        self.autoFitMinimum = autoFitMinimum
-        self.autoFitScope = autoFitScope
     }
     
     // MARK: - Coding
@@ -65,8 +55,6 @@ public struct Style: Codable, Hashable, Sendable, Identifiable {
         case secondary
         case templates
         case templateOrder
-        case autoFitMinimum
-        case autoFitScope
     }
     
     public init(from decoder: any Decoder) throws {
@@ -78,10 +66,9 @@ public struct Style: Codable, Hashable, Sendable, Identifiable {
         self.background = try container.decode(Varying<Fill>.self, forKey: .background)
         self.primary = try container.decode(TextStyle.self, forKey: .primary)
         self.secondary = try container.decode(TextStyle.self, forKey: .secondary)
-        self.autoFitMinimum = try container.decode(Double.self, forKey: .autoFitMinimum)
         
-        // NOTE: - Added after format 3 shipped; a file without it keeps one size per lineup, as it always had.
-        self.autoFitScope = try container.decodeIfPresent(AutoFitScope.self, forKey: .autoFitScope) ?? .lineup
+        // NOTE: - Files from before text wrapped also have `autoFitMinimum` and `autoFitScope`, which are ignored:
+        // text is always drawn at its style's size now.
         
         let templates = try container.decode([TemplateID: Template].self, forKey: .templates)
         let order = try container.decodeIfPresent([TemplateID].self, forKey: .templateOrder) ?? []
@@ -101,8 +88,6 @@ public struct Style: Codable, Hashable, Sendable, Identifiable {
         try container.encode(secondary, forKey: .secondary)
         try container.encode(Dictionary(templates.map { ($0.id, $0) }, uniquingKeysWith: { first, _ in first }), forKey: .templates)
         try container.encode(templates.map(\.id), forKey: .templateOrder)
-        try container.encode(autoFitMinimum, forKey: .autoFitMinimum)
-        try container.encode(autoFitScope, forKey: .autoFitScope)
     }
     
     // MARK: - Functions
@@ -224,8 +209,10 @@ public struct TextStyle: Codable, Hashable, Sendable {
     }
 }
 
-/// Where a text role sits: an anchor point's position and a width. The height follows from the font size and
-/// line limit, so a box always fits its lines.
+/// Where a text role sits: an anchor point's position and a width. Text wraps to as many lines as it needs, and the
+/// box's height follows from them, so a box always fits its text. A box anchored at its top grows downward.
+///
+/// Files from before text wrapped also have a `lineLimit`, which is ignored.
 public struct TextPlacement: Codable, Hashable, Sendable {
     /// Where the anchor point sits, in fractions of the canvas.
     public var position: NormPoint
@@ -237,29 +224,26 @@ public struct TextPlacement: Codable, Hashable, Sendable {
     public var width: Double
     public var alignment: TextAlign
     public var verticalAlignment: VerticalAlign
-    public var lineLimit: Int
     
     public init(
         position: NormPoint,
         anchor: BoxAnchor = .top,
         width: Double,
         alignment: TextAlign = .center,
-        verticalAlignment: VerticalAlign = .top,
-        lineLimit: Int = 2
+        verticalAlignment: VerticalAlign = .top
     ) {
         self.position = position
         self.anchor = anchor
         self.width = width
         self.alignment = alignment
         self.verticalAlignment = verticalAlignment
-        self.lineLimit = lineLimit
     }
     
     // MARK: - Functions
     
-    /// The box's height in pixels: its line limit's worth of lines at a font size.
-    public static func height(lineLimit: Int, fontSize: Double, lineHeight: Double, lineSpacing: Double) -> Double {
-        let lines = Double(max(lineLimit, 1))
+    /// The box's height in pixels for a number of lines at a font size.
+    public static func height(lines count: Int, fontSize: Double, lineHeight: Double, lineSpacing: Double) -> Double {
+        let lines = Double(max(count, 1))
         return lines * fontSize * lineHeight + (lines - 1) * lineSpacing
     }
     
@@ -329,13 +313,4 @@ public struct BaseStyle: Codable, Hashable, Sendable {
         self.version = version
         self.snapshot = snapshot
     }
-}
-
-/// Which slides share a fitted text size.
-public enum AutoFitScope: String, Codable, Hashable, Sendable, CaseIterable {
-    /// Every slide in a lineup on a device gets the size the longest text fits at, so the page looks even.
-    case lineup
-    
-    /// Each slide keeps the template's size unless its own text doesn't fit.
-    case slide
 }

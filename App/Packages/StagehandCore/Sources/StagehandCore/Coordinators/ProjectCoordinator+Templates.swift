@@ -22,76 +22,29 @@ extension ProjectCoordinator {
     }
     
     /// A template drawn on a target with its own placeholder text and no capture, never a slide's: a slide's text
-    /// and screenshot are its own, and editing them doesn't touch the template.
-    ///
-    /// Its text is the size the slides on that device are drawn at, so a template and its slides always match: with
-    /// one size for every slide, the lineup's fitted size; with each slide shrinking only to fit, the template set's
-    /// size. A placeholder too long for that size overflows (``placeholderOverflow(_:targetID:)`` says so) rather than
-    /// shrinking on its own, which made the template's text a different size from every slide's.
+    /// and screenshot are its own, and editing them doesn't touch the template. Text is at its style's size, as on
+    /// every slide, and wraps as it needs.
     public func templateScene(_ id: TemplateID, targetID: DeviceTarget.ID?, canvas: CGSize? = nil) -> ResolvedScene? {
         guard let template = project.style.template(id) else {
             return nil
         }
         
-        let target = templateTarget(targetID)
-        let slide = placeholderSlide(for: template)
+        let target = targetID.flatMap(DeviceTable.standard.target(id:))
+            ?? project.mainLineup.resolvedTargets().first
+            ?? DeviceTable.standard.targets(in: .phone).first!
         
-        return Resolver.resolve(ResolveRequest(
-            slide: slide,
+        return TextWrapping.resolve(ResolveRequest(
+            slide: placeholderSlide(for: template),
             style: project.style,
             target: target,
             locale: selection.locale,
             sourceLocale: project.sourceLocale,
             captures: captureCatalog,
             bezels: bezels,
-            fitted: slideTextSizes(on: target.deviceClass),
             lineHeights: lineHeights,
             canvas: canvas,
             assets: assetSizes
-        ))
-    }
-    
-    /// The text roles whose placeholder doesn't fit its box at the size the template is drawn at.
-    public func placeholderOverflow(_ id: TemplateID, targetID: DeviceTarget.ID?) -> [TextRole] {
-        guard let template = project.style.template(id) else {
-            return []
-        }
-        
-        let target = templateTarget(targetID)
-        let own = autoFit.result(
-            slides: [placeholderSlide(for: template)],
-            style: project.style,
-            target: target,
-            locale: selection.locale,
-            sourceLocale: project.sourceLocale
-        )
-        let drawn = slideTextSizes(on: target.deviceClass)?.sizes ?? [:]
-        
-        return TextRole.allCases.filter { role in
-            guard let fits = own.slideSizes[Self.placeholderSlideID]?[role] else {
-                return false
-            }
-            
-            let size = drawn[role] ?? project.style.textStyle(role).size[target.deviceClass]
-            return fits < size - 0.000_1
-        }
-    }
-    
-    private func templateTarget(_ targetID: DeviceTarget.ID?) -> DeviceTarget {
-        targetID.flatMap(DeviceTable.standard.target(id:))
-            ?? project.mainLineup.resolvedTargets().first
-            ?? DeviceTable.standard.targets(in: .phone).first!
-    }
-    
-    /// The text sizes the slides on a device are drawn at, when they share one (`nil` when each slide fits on its
-    /// own, which leaves the template set's size).
-    private func slideTextSizes(on device: DeviceClass) -> FittedText? {
-        guard project.style.autoFitScope == .lineup else {
-            return nil
-        }
-        
-        let set = currentSet ?? project.mainLineup
-        return FittedText(sizes: fitted(set: set, deviceClass: device, locale: selection.locale).sizes)
+        ), measurer: measurer)
     }
     
     /// The stand-in slide a template is drawn with: its placeholder text in every locale, and no capture.
@@ -111,7 +64,7 @@ extension ProjectCoordinator {
         )
     }
     
-    /// One ID for every placeholder slide, so the fit cache keys on the text rather than a new ID each time.
+    /// One ID for every placeholder slide, so its scene (and thumbnail) stays the same while nothing changes.
     static let placeholderSlideID = UUID(uuidString: "00000000-0000-0000-0000-00000000F1A7")!
     
     /// The slides that use a template on any of their devices.

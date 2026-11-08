@@ -121,11 +121,8 @@ extension Template {
         switch device {
         case .watch:
             layout.device = DevicePlacement(position: NormPoint(x: 0.5, y: 0.66), width: 0.7, bezel: .none, bareCornerRadius: 0.22)
-            layout.secondary.lineLimit = 1
         case .mac:
             layout.device = DevicePlacement(position: NormPoint(x: 0.5, y: 0.6), width: 0.72, bezel: .none, bareCornerRadius: 0.012)
-            layout.primary.lineLimit = 1
-            layout.secondary.lineLimit = 1
         case .phone, .duoOuter, .duoInner, .pad:
             break
         }

@@ -255,7 +255,7 @@ public struct TemplateElement: Codable, Hashable, Sendable, Identifiable {
     /// A starting placement for this kind of element, near the canvas's center.
     public func defaultPlacement() -> ElementPlacement {
         switch kind {
-        case .text: .text(TextPlacement(position: NormPoint(x: 0.5, y: 0.3), width: 0.7, lineLimit: 1))
+        case .text: .text(TextPlacement(position: NormPoint(x: 0.5, y: 0.3), width: 0.7))
         case .device: .device(DevicePlacement(position: NormPoint(x: 0.7, y: 0.7), width: 0.5))
         case .image: .image(ImagePlacement(position: NormPoint(x: 0.5, y: 0.5), width: 0.3))
         }

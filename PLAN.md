@@ -68,15 +68,13 @@ The kit sits at the root because Swift Package Manager reads the `Package.swift`
 
 ## Built
 
-These parts of the design shipped, and are described in CLAUDE.md's Architecture section: the data model and its resolution rules, templates (with locked slides, detachments and extra elements), devices added one at a time with one slide order, lineups in place of sets, the device table (`devices.json`), rendering, auto-fit, bezels (downloaded from Apple Design Resources, pinned and embedded), project and style documents (format 3), the Welcome window and New Project flow, the library and its flows (new projects from template sets, saving template sets, pulling changes, New Project from This), the editor's search preview, the capture kit, the capture runner, localization, and App Store Connect uploads (including custom product pages, and keeping App Store Connect's order). What's below is still to build, or still to decide.
+These parts of the design shipped, and are described in CLAUDE.md's Architecture section: the data model and its resolution rules, templates (with locked slides, detachments and extra elements), devices added one at a time with one slide order, lineups in place of sets, the device table (`devices.json`), rendering, text that wraps at its style's size, bezels (downloaded from Apple Design Resources, pinned and embedded), project and style documents (format 3), the Welcome window and New Project flow, the library and its flows (new projects from template sets, saving template sets, pulling changes, New Project from This), the editor's search preview, the capture kit, the capture runner, localization, and App Store Connect uploads (including custom product pages, and keeping App Store Connect's order). What's below is still to build, or still to decide.
 
 ## Templates, devices and bezels
 
 Built (CLAUDE.md's Architecture describes them), except what only a person can check:
 
 - **The Welcome window** at launch, and New Project from it, by hand on the Mac.
-- **A real bezel download.** The license step, `yes | hdiutil attach`, and the PNGs' names haven't met a real disk image yet (open question 11). Download one product (the iPad Pro's is 7 MB), then tighten `BezelSource`/`BezelDownloader`'s name parsing and the Duo's outer and inner split to what's inside.
-- **Extra elements' editor.** Extra text, device and image elements work in the model, resolver, renderer, String Catalog and inspectors; their auto-fit (extra text uses its style's size, unfitted) is still to decide.
 
 ## The capture kit
 
@@ -103,7 +101,7 @@ The order and the work items are in TASKS.md.
 3. **Capture kit and runner:** the package, the runner, the fixture app, and moving TrekPoint and the second app onto the kit. This comes early because the apps already have screenshot test targets.
 4. **Sets, variants and every device:** the slide pool, shared slides, variants, the Duo (with the unfold step), the Mac, Watch, and validation.
 5. **Library and reuse:** style documents, the library, promoting styles, pulling changes, duplicating sets and projects.
-6. **Localization:** locale lists, the String Catalog round trip, per-locale auto-fit and captures.
+6. **Localization:** locale lists, the String Catalog round trip, per-locale text and captures.
 7. **App Store Connect:** authentication, the client, and planned, confirmed uploads.
 8. **iPad:** checking the build, touch editing, and the library through Files.
 9. **Templates, devices and bezels:** the Welcome window and New Project flow, templates with locked slides and detachments, devices added one at a time, lineups in place of sets, and bezels downloaded from Apple Design Resources and pinned.
@@ -118,6 +116,6 @@ The order and the work items are in TASKS.md.
 6. **String Catalog device variations:** is there one for iPhone Duo?
 7. **Mac screenshots:** a framed window on the style's background, or a full desktop? The fixture style uses a framed window for now (`bezel: .none`, small corners, the glow).
 8. **Appearance:** should light and dark be a capture dimension, like locale?
-11. **The bezel images' contents:** partly answered by the iPhone 18 download (November 2026): `PNG/<model>/<model> - <color> - <Portrait|Landscape>.png` and the same in `Photoshop/` as `.psd`, for the iPhone 18 Pro and Pro Max in four colors, plus the window background in `.DropDMGBackground/`. Each PNG is the whole device in one image (frame, side buttons, and the Dynamic Island over a transparent screen), and the Photoshop files hold only a Hardware layer (a smart object whose inner file is also one flat layer, at about three times the size) and a Screen layer, so there are no separate layers to import. Still to check: whether the Duo's image has both displays, and the other products' names.
+11. **The bezel images' contents:** partly answered by the iPhone 18 download (November 2026): `PNG/<model>/<model> - <color> - <Portrait|Landscape>.png` and the same in `Photoshop/` as `.psd`, for the iPhone 18 Pro and Pro Max in four colors, plus the window background in `.DropDMGBackground/`. Each PNG is the whole device in one image (frame, side buttons, and the Dynamic Island over a transparent screen), and the Photoshop files hold only a Hardware layer (a smart object whose inner file is also one flat layer, at about three times the size) and a Screen layer, so there are no separate layers to import. The iPad Pro (M5), Apple Watch Ultra 4 and iPhone Duo downloads (November 2026) follow the same pattern: the Duo's images say which display (`Inner Open Portrait`, `Outer Closed Portrait`) and import to the inner and outer classes, the iPad's come in 11" and 13", and the Watch's are named for a case and band (`AW Ultra 4 - Black + Ocean Band Translucent Black`).
 9. **Names:** answered: the second app is Flask Master, through MJGameKit's MJScreenshotTesting (TASKS.md 3.13).
 10. **The Duo's `ScreenshotDisplayType` values:** `devices.json` has `APP_IPHONE_DUO_OUTER` and `APP_IPHONE_DUO_INNER` as placeholders (`displayTypeVerified: false`). Check them against Apple's OpenAPI spec before uploading Duo screenshots.

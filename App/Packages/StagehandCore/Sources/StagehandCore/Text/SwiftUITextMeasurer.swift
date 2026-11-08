@@ -24,12 +24,7 @@ public final class SwiftUITextMeasurer: TextMeasurer {
         let line = size(of: "Ag", font: font, tracking: tracking, lineSpacing: lineSpacing, width: nil)
         let lineHeight = max(line.height, 1)
         let lines = max(1, Int(((full.height + lineSpacing) / (lineHeight + lineSpacing)).rounded()))
-        let widestWord = text
-            .split(whereSeparator: \.isWhitespace)
-            .map { size(of: String($0), font: font, tracking: tracking, lineSpacing: lineSpacing, width: nil).width }
-            .max() ?? 0
-        
-        return TextMeasurement(size: full, lineCount: lines, widestWord: widestWord)
+        return TextMeasurement(size: full, lineCount: lines)
     }
     
     public func invalidate() {

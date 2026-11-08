@@ -280,45 +280,42 @@ import Testing
         #expect(template.name == "Old")
     }
     
-    // MARK: - Text sizes
+    // MARK: - Text
     
-    /// Regression test: auto-fit only fitted the slides that are on a device, so a slide shown on a device it's off
-    /// for (all of TrekPoint's slides on iPad) was drawn at the template set's full size, overflowing its box.
-    @Test func aSlideShownOnADeviceItsOffForIsStillFitted() throws {
+    /// Regression test: text shrank to fit its box (auto-fit, with one size per lineup), so a template and the slides
+    /// made from it showed their text at very different sizes. Text is now always its style's size, everywhere.
+    @Test func textIsTheSameSizeOnATemplateAndEverySlide() throws {
         let (coordinator, _) = make()
         let set = coordinator.project.mainLineup
-        let slide = set.slideIDs[0]
-        coordinator.handle(.setText(.primary, "Bring everything along"))
-        coordinator.handle(.setSlideOn(slide, .pad, false))
-        coordinator.handle(.selectCell(CellID(setID: set.id, slideID: slide, targetID: "ipad-13")))
+        let style = coordinator.project.style.primary.size[.phone] * 1320
+        coordinator.handle(.setText(.primary, "Bring everything along on every trail you take this year"))
         
-        let scene = try #require(coordinator.canvasScene)
-        let full = coordinator.project.style.primary.size[.pad] * 2064
-        #expect(try #require(scene.primary).font.size < full)
-    }
-    
-    /// Regression test: the template editor fitted its placeholder on its own, so its text was a different size from
-    /// every slide made from it (on iPad, 60% of the size while the slides were at 100%).
-    @Test func aTemplateDrawsItsTextAtTheSizeItsSlidesUse() throws {
-        let (coordinator, _) = make()
-        coordinator.handle(.setText(.primary, "Bring everything along"))
-        let shared = try #require(coordinator.fitted(set: coordinator.project.mainLineup, deviceClass: .phone, locale: "en-US").sizes[.primary])
-        #expect(shared < coordinator.project.style.primary.size[.phone])
+        for slide in set.slideIDs {
+            coordinator.handle(.selectCell(CellID(setID: set.id, slideID: slide, targetID: "iphone-dynamic-island-large")))
+            #expect(try #require(coordinator.canvasScene?.primary).font.size == style)
+        }
         
         coordinator.handle(.selectTemplate(.straight))
-        #expect(try #require(coordinator.canvasScene?.primary).font.size == shared * 1320)
+        #expect(try #require(coordinator.canvasScene?.primary).font.size == style)
         
-        // Each slide shrinking only to fit: the template shows the template set's size, as a slide that fits does.
-        coordinator.handle(.editStyle("Change Auto-fit") { style, _ in style.autoFitScope = .slide })
-        #expect(try #require(coordinator.canvasScene?.primary).font.size == coordinator.project.style.primary.size[.phone] * 1320)
+        // A slide shown on a device it's off for, too.
+        coordinator.handle(.setSlideOn(set.slideIDs[0], .pad, false))
+        coordinator.handle(.selectCell(CellID(setID: set.id, slideID: set.slideIDs[0], targetID: "ipad-13")))
+        #expect(try #require(coordinator.canvasScene?.primary).font.size == coordinator.project.style.primary.size[.pad] * 2064)
     }
     
-    @Test func aPlaceholderTooLongForTheSizeIsReported() {
+    /// Long text wraps onto more lines, and its box grows to fit them, so the canvas's handles and snapping match
+    /// what's drawn.
+    @Test func longTextWrapsAndItsBoxGrows() throws {
         let (coordinator, _) = make()
-        coordinator.handle(.selectTemplate(.straight))
-        #expect(coordinator.placeholderOverflow(.straight, targetID: "iphone-dynamic-island-large").isEmpty)
+        let short = try #require(coordinator.canvasScene?.primary)
         
-        coordinator.handle(.setPlaceholder(.straight, .primary, "A placeholder headline that goes on far longer than any box"))
-        #expect(coordinator.placeholderOverflow(.straight, targetID: "iphone-dynamic-island-large") == [.primary])
+        coordinator.handle(.setText(.primary, "Bring everything along on every trail you take this year"))
+        let long = try #require(coordinator.canvasScene?.primary)
+        
+        #expect(long.font.size == short.font.size)
+        #expect(long.frame.width == short.frame.width)
+        #expect(long.frame.height > short.frame.height * 1.5)
+        #expect(long.frame.minY == short.frame.minY)
     }
 }

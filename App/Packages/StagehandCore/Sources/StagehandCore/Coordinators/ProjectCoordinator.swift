@@ -214,8 +214,7 @@ public final class ProjectCoordinator {
     @ObservationIgnored public private(set) lazy var imageStore = ImageStore { [weak self] ref in
         self?.loadImage(ref)
     }
-    @ObservationIgnored let autoFit: AutoFitCache
-    @ObservationIgnored private let measurer: any TextMeasurer
+    @ObservationIgnored let measurer: any TextMeasurer
     @ObservationIgnored private var fontTask: Task<Void, Never>?
     @ObservationIgnored var assetSizeCache: [String: (byteCount: Int, size: CGSize)] = [:]
     
@@ -223,7 +222,6 @@ public final class ProjectCoordinator {
         let measurer = measurer ?? SwiftUITextMeasurer()
         self.document = document
         self.measurer = measurer
-        self.autoFit = AutoFitCache(measurer: measurer)
         self.selection = EditorSelection(locale: document.project.sourceLocale)
         repairSelection()
         
@@ -345,29 +343,6 @@ public final class ProjectCoordinator {
         CaptureCatalog(index: document.captures)
     }
     
-    /// The fitted text sizes for a lineup, device class and locale, measured on the class's first target in the
-    /// lineup, over the slides that are on that device.
-    ///
-    /// - Parameter including: A slide to fit as if it were on the device, when it's shown there while it's off (on
-    ///   the canvas). Without it, an off slide was drawn at the template set's full size, unfitted.
-    public func fitted(set: ShotSet, deviceClass: DeviceClass, locale: LocaleID, including: Slide.ID? = nil) -> AutoFitResult {
-        let target = set.resolvedTargets().first { $0.deviceClass == deviceClass }
-            ?? DeviceTable.standard.targets(in: deviceClass).first!
-        var slides = project.slides(in: set, on: deviceClass)
-        
-        if let including, !slides.contains(where: { $0.id == including }), let slide = project.slides[including] {
-            slides.append(slide)
-        }
-        
-        return autoFit.result(
-            slides: slides,
-            style: project.style,
-            target: target,
-            locale: locale,
-            sourceLocale: project.sourceLocale
-        )
-    }
-    
     /// The capture keys there are screenshots for on a device class (in any locale), for choosing a slide's: a run
     /// keys each screenshot by its test's name for it, and `inUse` says which a slide already shows.
     public func captureKeys(on device: DeviceClass) -> [(key: String, inUse: Bool)] {
@@ -376,34 +351,17 @@ public final class ProjectCoordinator {
         return captured.sorted { $0.localizedStandardCompare($1) == .orderedAscending }.map { ($0, used.contains($0)) }
     }
     
-    /// Why the selected slide's text is smaller than the template set's size, for the inspector: the percentage it's
-    /// drawn at, and the slide whose text made it shrink (this one, or the lineup's longest).
-    public func textShrinking(_ role: TextRole) -> (percent: Int, cause: Slide)? {
-        guard !isEditingTemplate, let set = currentSet, let slide = currentSlide else {
-            return nil
-        }
-        
-        let result = fitted(set: set, deviceClass: currentDeviceClass, locale: selection.locale, including: slide.id)
-        
-        guard let shrinking = result.shrinking(role, on: slide.id), let cause = project.slides[shrinking.cause] else {
-            return nil
-        }
-        
-        return (Int((shrinking.fraction * 100).rounded()), cause)
-    }
-    
     /// A cell's scene in a locale (the selected one by default), at the target's export size unless a canvas is given.
     public func scene(for cell: CellID, locale: LocaleID? = nil, canvas: CGSize? = nil) -> ResolvedScene? {
-        guard let set = project.set(id: cell.setID),
+        guard project.set(id: cell.setID) != nil,
               let slide = project.slides[cell.slideID],
               let target = DeviceTable.standard.target(id: cell.targetID) else {
             return nil
         }
         
         let locale = locale ?? selection.locale
-        let fitted = fitted(set: set, deviceClass: target.deviceClass, locale: locale, including: slide.id).fitted(for: slide.id)
         
-        return Resolver.resolve(ResolveRequest(
+        return TextWrapping.resolve(ResolveRequest(
             slide: slide,
             style: project.style,
             target: target,
@@ -411,11 +369,10 @@ public final class ProjectCoordinator {
             sourceLocale: project.sourceLocale,
             captures: captureCatalog,
             bezels: bezels,
-            fitted: fitted,
             lineHeights: lineHeights,
             canvas: canvas,
             assets: assetSizes
-        ))
+        ), measurer: measurer)
     }
     
     /// Every font installed on the system, by family.
@@ -762,7 +719,7 @@ public final class ProjectCoordinator {
         case .documentReloaded:
             thumbnails.removeAll()
             imageStore.invalidate()
-            autoFit.removeAll()
+            measurer.invalidate()
             repairSelection()
             registerFonts()
         case .dismissAlert:
@@ -1062,7 +1019,7 @@ public final class ProjectCoordinator {
             }
             
             self?.thumbnails.removeAll()
-            self?.autoFit.removeAll()
+            self?.measurer.invalidate()
             self?.fontsReady = true
         }
     }

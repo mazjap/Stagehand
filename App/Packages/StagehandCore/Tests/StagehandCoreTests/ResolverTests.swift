@@ -26,7 +26,7 @@ import Testing
         locale: LocaleID = "en-US",
         captures: CaptureCatalog = CaptureCatalog(),
         bezels: BezelCatalog = .empty,
-        fitted: FittedText? = nil
+        lineCounts: [ElementRef: Int] = [:]
     ) -> ResolvedScene {
         Resolver.resolve(ResolveRequest(
             slide: slide ?? self.slide,
@@ -36,7 +36,7 @@ import Testing
             sourceLocale: "en-US",
             captures: captures,
             bezels: bezels,
-            fitted: fitted
+            lineCounts: lineCounts
         ))
     }
     
@@ -231,10 +231,9 @@ import Testing
         #expect(abs(scene.device!.size.width / scene.device!.size.height - 422.0 / 514.0) < 0.0001)
     }
     
-    @Test func fittedSizesAndOverflowComeFromAutoFit() {
-        let scene = resolve(fitted: FittedText(sizes: [.primary: 0.05], overflowing: [.primary]))
-        #expect(scene.primary?.font.size == 0.05 * 1320)
-        #expect(scene.flags.contains(.overflow(.primary)))
+    @Test func textIsAlwaysItsStylesSizeHoweverManyLinesItWrapsTo() {
+        let scene = resolve(lineCounts: [.primary: 4])
+        #expect(scene.primary?.font.size == 0.085 * 1320)
     }
     
     @Test func aWrongSizedCaptureIsFlagged() {
@@ -251,19 +250,25 @@ import Testing
         #expect(glow.offset == .zero)
     }
     
-    @Test func aTextBoxIsAsTallAsItsLinesAtItsFontSize() throws {
-        let scene = Resolver.resolve(ResolveRequest(
-            slide: slide,
-            style: project.style,
-            target: phone,
-            locale: "en-US",
-            sourceLocale: "en-US",
-            captures: CaptureCatalog(),
-            lineHeights: [.systemHeavy: 1.25]
-        ))
-        let primary = try #require(scene.primary)
-        let size = 0.085 * 1320
+    @Test func aTextBoxIsAsTallAsTheLinesItWrapsTo() throws {
+        func primary(lines: Int?) throws -> ResolvedText {
+            try #require(Resolver.resolve(ResolveRequest(
+                slide: slide,
+                style: project.style,
+                target: phone,
+                locale: "en-US",
+                sourceLocale: "en-US",
+                captures: CaptureCatalog(),
+                lineCounts: lines.map { [.primary: $0] } ?? [:],
+                lineHeights: [.systemHeavy: 1.25]
+            )).primary)
+        }
         
+        let size = 0.085 * 1320
+        let unmeasured = try primary(lines: nil)
+        let primary = try primary(lines: 2)
+        
+        #expect(abs(unmeasured.frame.height - size * 1.25) < 0.001)
         #expect(abs(primary.frame.height - 2 * size * 1.25) < 0.001)
         #expect(abs(primary.frame.midX - 660) < 0.001)
         #expect(abs(primary.frame.minY - 0.055 * 2868) < 0.001)
@@ -272,8 +277,8 @@ import Testing
     @Test func aBottomAnchoredBoxGrowsUpward() throws {
         var style = project.style
         style.updateTemplate(.straight) { $0.layouts[.phone]?.primary.anchor = .bottom }
-        let small = try #require(resolve(style: style, fitted: FittedText(sizes: [.primary: 0.05])).primary)
-        let large = try #require(resolve(style: style).primary)
+        let small = try #require(resolve(style: style).primary)
+        let large = try #require(resolve(style: style, lineCounts: [.primary: 3]).primary)
         
         #expect(abs(small.frame.maxY - large.frame.maxY) < 0.001)
         #expect(large.frame.minY < small.frame.minY)
