@@ -235,6 +235,11 @@ PLAN.md's Launching and new projects, Templates, Devices, and Bezels from Apple 
   - Limits: simulators still boot one at a time (two booting at once can crash CoreSimulator), the Duo's outer pass still comes before its inner one since they share a simulator, the Duo's unfold prompt can't hold up the other devices, and a Mac pass runs alone since it drives the real desktop. The console (11.1) has to show several devices at once.
   - Done when a runner test with a fake process runner shows those limits hold, and that one device failing doesn't stop the others. Then run it for real once, end to end.
 
+## 12. Bugs
+
+- [ ] **12.1 Scrolling the slide overview only works sometimes:** on the contact sheet, the scroll wheel (vertical) and Shift-scroll wheel (horizontal) only work intermittently. The cause isn't known yet.
+  - Done when both scroll reliably with a mouse wheel, with a regression test for the cause.
+
 ## Every September
 
 When new devices and an Xcode release arrive:
