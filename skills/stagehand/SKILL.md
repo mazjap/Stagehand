@@ -77,7 +77,7 @@ func test03Map() throws {
 
 1. Launches a fresh `XCUIApplication` with `launchArguments` + `-stagehand-capturing` (+ `-AppleLanguages`/`-AppleLocale` during a Stagehand run), `launchEnvironment`, and the scene under `sceneEnvironmentKey`.
 2. Waits for readiness, if given: `waitingFor:` is shorthand for `until: .element(…)`. `Readiness` is `.element { app in … }` (exists), `.value(of: { app in … }, contains: "…")` (value or label contains the text), or `.condition { app in … }` (polled every quarter second). Not ready by `timeout` fails the test.
-3. Settles (`settle`, or 3 seconds, or 1 second after readiness), then screenshots every `XCUIScreen` (the app's first window on macOS), keeps the largest one that isn't blank, and applies known simulator fixes (the iPhone Duo's inner display is upside down in iOS 27.1).
+3. Settles (`settle`, or 3 seconds, or 1 second after readiness), then screenshots every `XCUIScreen` (the app's first window on macOS), keeps the largest one that isn't blank, and applies known simulator fixes (the iPhone Duo's inner display is upside down in iOS 27.1). A screenshot within 2 pixels of a size in `devices.json`, in width and in height, counts as that size (the Duo's iOS 27.2 simulator takes its inner display at 2006 × 2852), and Stagehand scales it to fill the bezel's screen.
 4. Attaches `stagehand.<capture ID>.<name>` (the PNG) and `stagehand.<capture ID>.meta` (JSON metadata: name, scene, device class and size target from the pixel size, locale, run ID, simulator, fixes applied), and writes the folder copy if configured.
 5. Fails the test if a Stagehand run expected another device class (`STAGEHAND_EXPECTED_CLASS`).
 6. Terminates the app.

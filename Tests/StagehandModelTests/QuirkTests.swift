@@ -19,9 +19,17 @@ import Testing
     }
     
     @Test func stillAppliesToNewerRuntimesAndFlagsThem() {
-        #expect(quirk.applies(model: "iPhone19,4", runtime: RuntimeVersion("27.2"), deviceClass: .duoInner))
-        #expect(quirk.isBeyondObserved(RuntimeVersion("27.2")))
-        #expect(!quirk.isBeyondObserved(RuntimeVersion("27.1")))
+        var unfixed = quirk
+        unfixed.fixedIn = nil
+        #expect(unfixed.applies(model: "iPhone19,4", runtime: RuntimeVersion("27.2"), deviceClass: .duoInner))
+        #expect(unfixed.isBeyondObserved(RuntimeVersion("27.2")))
+        #expect(!unfixed.isBeyondObserved(RuntimeVersion("27.1")))
+    }
+    
+    /// Regression test: the iPhone Duo's iOS 27.2 simulator takes its inner display right side up, so turning its
+    /// screenshots would put them upside down.
+    @Test func theDuoInnerDisplayIsFixedOnIOS27_2() {
+        #expect(!quirk.applies(model: "iPhone19,4", runtime: RuntimeVersion("27.2"), deviceClass: .duoInner))
     }
     
     @Test func stopsApplyingOnceFixed() {

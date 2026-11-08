@@ -53,8 +53,9 @@ public struct Quirk: Codable, Hashable, Sendable, Identifiable {
             modelIdentifiers: ["iPhone19,4"],
             deviceClass: .duoInner,
             observedRuntimes: [RuntimeVersion("27.1")!],
+            fixedIn: RuntimeVersion("27.2")!,
             fix: .rotate180,
-            note: "The iPhone Duo simulator's inner display screenshots come back upside down. Observed in TrekPoint, October 2026."
+            note: "The iPhone Duo simulator's inner display screenshots come back upside down. Observed in TrekPoint, October 2026, and right side up on iOS 27.2 in November."
         ),
     ]
     

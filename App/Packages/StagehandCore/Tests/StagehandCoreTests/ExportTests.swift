@@ -22,6 +22,60 @@ import Testing
         }
     }
     
+    /// A capture that isn't the bezel's shape covers the whole screen, cropped rather than letterboxed. A capture within
+    /// the size tolerance is one case, and these are far enough off that a gap would be seen.
+    @Test(arguments: [(width: 1318, height: 2866), (width: 1000, height: 3000), (width: 1800, height: 2700)])
+    func aCaptureThatIsNotExactFillsTheBezelsScreen(size: (width: Int, height: Int)) throws {
+        let project = Project.fixture()
+        let slide = project.slides(in: project.mainLineup)[0]
+        let target = DeviceTable.target("iphone-dynamic-island-large")
+        let address = CaptureAddress(key: slide.captureKey[.phone], deviceClass: .phone, locale: "en-US")
+        let bezel = BezelInfo(
+            id: "test-phone",
+            name: "Synthetic",
+            deviceClass: .phone,
+            model: "Synthetic",
+            color: "Black",
+            imageWidth: TestImages.bezelSize.width,
+            imageHeight: TestImages.bezelSize.height,
+            screenRect: TestImages.bezelScreen
+        )
+        let scene = Resolver.resolve(ResolveRequest(
+            slide: slide,
+            style: project.style,
+            target: target,
+            locale: "en-US",
+            sourceLocale: "en-US",
+            captures: CaptureCatalog(entries: [address: .init(ref: .capture(address, revision: 1), pixelWidth: size.width, pixelHeight: size.height)]),
+            bezels: BezelCatalog(bezels: [bezel.id: bezel], defaults: [.phone: bezel.id])
+        ))
+        let device = try #require(scene.device)
+        let bezelImage = TestImages.bezel()
+        let rendered = try #require(SceneRenderer.render(scene, images: SceneImages([
+            .capture(address, revision: 1): TestImages.solid(width: size.width, height: size.height, red: 0.9, green: 0.1, blue: 0.6),
+            bezel.imageRef: bezelImage,
+            bezel.maskRef: try BezelDetector.detect(in: bezelImage).mask,
+        ]), scale: 1))
+        
+        let screen = device.screen.offsetBy(dx: device.center.x - device.size.width / 2, dy: device.center.y - device.size.height / 2)
+        let inset = 4.0
+        let edges = [
+            CGPoint(x: screen.minX + inset, y: screen.midY),
+            CGPoint(x: screen.maxX - inset, y: screen.midY),
+            // A quarter of the way along, to miss the island
+            CGPoint(x: screen.minX + screen.width / 4, y: screen.minY + inset),
+            CGPoint(x: screen.minX + screen.width / 4, y: screen.maxY - inset),
+        ]
+        let visible = edges.filter { $0.x >= 0 && $0.y >= 0 && Int($0.x) < rendered.width && Int($0.y) < rendered.height }
+        
+        #expect(visible.count >= 3, "The layout should keep most of the screen on the canvas")
+        
+        for point in visible {
+            let pixel = TestImages.pixel(rendered, x: Int(point.x), y: Int(point.y))
+            #expect(abs(Int(pixel[0]) - 230) < 12 && abs(Int(pixel[1]) - 26) < 12 && abs(Int(pixel[2]) - 153) < 12, "\(point) is \(pixel)")
+        }
+    }
+    
     @Test func exportPathsFollowTheSetOrder() {
         let items = ProjectExporter().items(for: .fixture())
         let paths = items.map(\.relativePath)
