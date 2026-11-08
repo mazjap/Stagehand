@@ -44,11 +44,35 @@ import Testing
         var environment = duoEnvironment
         environment.simulatorRuntime = "27.2"
         let inner = FixtureImages.markedTop(width: 2007, height: 2853)
+        let unfixed = Quirk.all.map { quirk in
+            var quirk = quirk
+            quirk.fixedIn = nil
+            return quirk
+        }
         
-        let processed = try CapturePipeline.process(screenshots: [inner], name: "x", scene: nil, environment: environment)
+        let processed = try CapturePipeline.process(screenshots: [inner], name: "x", scene: nil, environment: environment, quirks: unfixed)
         
         #expect(processed.shot.quirksApplied == ["duo-inner-rotated-180"])
         #expect(processed.shot.simulatorRuntime == "27.2")
+    }
+    
+    /// Regression test: the iPhone Duo's iOS 27.2 simulator takes inner display screenshots at 2006 × 2852, right side up.
+    /// They failed the size check, which the runner reported as the Duo still being folded, and every attempt failed.
+    @Test func anOpenDuoOnIOS27_2PassesTheSizeCheckRightSideUp() throws {
+        var environment = duoEnvironment
+        environment.simulatorRuntime = "27.2"
+        environment.expectedClass = .duoInner
+        let cover = FixtureImages.darkUI(width: 1398, height: 2034)
+        let inner = FixtureImages.markedTop(width: 2006, height: 2852)
+        
+        let processed = try CapturePipeline.process(screenshots: [cover, inner], name: "x", scene: nil, environment: environment)
+        
+        #expect(processed.expectationFailure == nil)
+        #expect(processed.shot.deviceClass == .duoInner)
+        #expect(processed.shot.targetID == "iphone-duo-inner")
+        #expect(processed.shot.pixelWidth == 2006 && processed.shot.pixelHeight == 2852)
+        #expect(processed.shot.quirksApplied.isEmpty)
+        #expect(FixtureImages.pixel(processed.image, x: 10, y: 5)[1] < 100)
     }
     
     @Test func aDarkUIIsNotBlank() {

@@ -46,7 +46,35 @@ import Testing
     
     @Test func anUnknownSizeClassifiesToNothing() {
         #expect(table.classify(width: 1000, height: 1000) == nil)
-        #expect(table.classify(width: 1321, height: 2868) == nil)
+        #expect(table.classify(width: 1323, height: 2868) == nil)
+    }
+    
+    /// Regression test: the iPhone Duo's iOS 27.2 simulator takes inner display screenshots at 2006 × 2852, one pixel
+    /// short of the 2007 × 2853 App Store Connect asks for, so every capture failed the size check.
+    @Test func aSizeWithinTheToleranceClassifiesAsItsTarget() throws {
+        let inner = try #require(table.classify(width: 2006, height: 2852))
+        #expect(inner.deviceClass == .duoInner)
+        #expect(inner.size.width == 2007 && inner.size.height == 2853)
+        #expect(inner.isRotated == false)
+        
+        #expect(table.classify(width: 2852, height: 2006)?.isRotated == true)
+        #expect(table.classify(width: 2009, height: 2851)?.deviceClass == .duoInner)
+        #expect(table.classify(width: 2010, height: 2853) == nil)
+        #expect(table.classify(width: 2007, height: 2850) == nil)
+    }
+    
+    /// A capture can only match one size, so two sizes can't be within twice the tolerance of each other.
+    @Test func noCaptureCanMatchTwoSizes() {
+        let sizes = table.targets.flatMap { target in target.sizes.map { (target: target.id, width: $0.width, height: $0.height) } }
+        let reach = DeviceTable.sizeTolerance * 2
+        
+        for (index, first) in sizes.enumerated() {
+            for second in sizes[(index + 1)...] {
+                let isNear = abs(first.width - second.width) <= reach && abs(first.height - second.height) <= reach
+                let isNearRotated = abs(first.width - second.height) <= reach && abs(first.height - second.width) <= reach
+                #expect(!isNear && !isNearRotated, "\(first) and \(second) are too close")
+            }
+        }
     }
     
     @Test func theDuoDisplaysAreToldApartBySize() {

@@ -243,6 +243,13 @@ import Testing
         #expect(scene.flags.contains(.captureSizeMismatch(address)))
     }
     
+    /// Regression test: the iPhone Duo's iOS 27.2 simulator takes inner display screenshots a pixel short of its target.
+    @Test func aCaptureWithinTheSizeToleranceIsNotFlagged() {
+        let address = CaptureAddress(key: "read-the-land", deviceClass: .phone, locale: "en-US")
+        let scene = resolve(captures: catalog([address], width: 1319, height: 2867))
+        #expect(!scene.flags.contains(.captureSizeMismatch(address)))
+    }
+    
     @Test func theGlowIsABlurOfTheDevice() throws {
         let glow = try #require(resolve().device?.glow)
         #expect(glow.blur == 0.07 * 1320)

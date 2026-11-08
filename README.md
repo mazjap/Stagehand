@@ -25,7 +25,7 @@ Stagehand is young (the kit is 0.x), and was built for the author's own apps fir
 
 - **The app:** macOS 27 (or iPadOS 27) and Xcode 27. Capturing (running your screenshot tests) is Mac only.
 - **The kit:** any app whose screenshot tests run on iOS 17, macOS 14 or watchOS 10 or later.
-- **iPhone Duo captures:** the iOS 27.1 simulator (Xcode 27.1).
+- **iPhone Duo captures:** an iOS 27.1 or newer simulator that supports the Duo.
 
 ## Building the app
 
@@ -171,7 +171,7 @@ final class AppStoreScreenshots: XCTestCase {
 - **`waitingFor`** / **`until`:** what to wait for before settling. `until` takes a `Readiness`: `.element { … }` (exists), `.value(of: { … }, contains: "…")` (its value or label contains the text), or `.condition { app in … }` (polled until true).
 - **`timeout`** and **`settle`:** how long to wait for readiness (10 seconds), and how long to settle before capturing (3 seconds, or 1 second after readiness).
 
-It captures every display and keeps the largest one that isn't blank (which is how the iPhone Duo's open inner display is captured), fixes known simulator bugs (the Duo's inner display comes back upside down), and fails the test if the screenshot isn't the size a Stagehand run expected.
+It captures every display and keeps the largest one that isn't blank (which is how the iPhone Duo's open inner display is captured), fixes known simulator bugs (the Duo's inner display comes back upside down on iOS 27.1), and fails the test if the screenshot isn't the size a Stagehand run expected. A screenshot within 2 pixels of a size, in width and in height, counts as that size, since simulators can be a pixel off (the Duo's iOS 27.2 simulator takes its inner display at 2006 × 2852). Stagehand scales a capture to fill the bezel's screen, cropping anything that doesn't fit, and exports are always the exact size App Store Connect asks for.
 
 ### Configuration
 

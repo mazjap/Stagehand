@@ -30,6 +30,12 @@ public struct DeviceTable: Codable, Sendable, Hashable {
         }
     }()
     
+    /// How many pixels a capture's width and height can each be from a target's size and still be that size.
+    ///
+    /// Simulators don't always take screenshots at exactly the size of their display: the iPhone Duo's iOS 27.2 simulator
+    /// takes its inner display at 2006 × 2852, for a 2007 × 2853 display. Exports are always a target's exact size.
+    public static let sizeTolerance = 2
+    
     // MARK: - Functions
     
     /// The target with this ID.
@@ -43,20 +49,30 @@ public struct DeviceTable: Codable, Sendable, Hashable {
     }
     
     /// The target a screenshot of this pixel size belongs to, in either orientation, or `nil` when no target accepts it.
+    ///
+    /// A size within `sizeTolerance` of a target's counts as that size, and the closest one wins, so an exact match always
+    /// does. `size` is the target's size, not the screenshot's.
     public func classify(width: Int, height: Int) -> Classification? {
+        var closest: (classification: Classification, distance: Int)?
+        
         for target in targets {
             for size in target.sizes {
-                if size.width == width && size.height == height {
-                    return Classification(target: target, size: size, isRotated: false)
-                }
-                
-                if size.width == height && size.height == width {
-                    return Classification(target: target, size: size, isRotated: true)
+                for isRotated in [false, true] {
+                    let widthOff = abs(size.width - (isRotated ? height : width))
+                    let heightOff = abs(size.height - (isRotated ? width : height))
+                    
+                    guard widthOff <= Self.sizeTolerance, heightOff <= Self.sizeTolerance else {
+                        continue
+                    }
+                    
+                    if widthOff + heightOff < closest?.distance ?? .max {
+                        closest = (Classification(target: target, size: size, isRotated: isRotated), widthOff + heightOff)
+                    }
                 }
             }
         }
         
-        return nil
+        return closest?.classification
     }
     
     /// The result of classifying a pixel size.
