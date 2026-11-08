@@ -347,12 +347,20 @@ public final class ProjectCoordinator {
     
     /// The fitted text sizes for a lineup, device class and locale, measured on the class's first target in the
     /// lineup, over the slides that are on that device.
-    public func fitted(set: ShotSet, deviceClass: DeviceClass, locale: LocaleID) -> AutoFitResult {
+    ///
+    /// - Parameter including: A slide to fit as if it were on the device, when it's shown there while it's off (on
+    ///   the canvas). Without it, an off slide was drawn at the template set's full size, unfitted.
+    public func fitted(set: ShotSet, deviceClass: DeviceClass, locale: LocaleID, including: Slide.ID? = nil) -> AutoFitResult {
         let target = set.resolvedTargets().first { $0.deviceClass == deviceClass }
             ?? DeviceTable.standard.targets(in: deviceClass).first!
+        var slides = project.slides(in: set, on: deviceClass)
+        
+        if let including, !slides.contains(where: { $0.id == including }), let slide = project.slides[including] {
+            slides.append(slide)
+        }
         
         return autoFit.result(
-            slides: project.slides(in: set, on: deviceClass),
+            slides: slides,
             style: project.style,
             target: target,
             locale: locale,
@@ -375,7 +383,7 @@ public final class ProjectCoordinator {
             return nil
         }
         
-        let result = fitted(set: set, deviceClass: currentDeviceClass, locale: selection.locale)
+        let result = fitted(set: set, deviceClass: currentDeviceClass, locale: selection.locale, including: slide.id)
         
         guard let shrinking = result.shrinking(role, on: slide.id), let cause = project.slides[shrinking.cause] else {
             return nil
@@ -393,7 +401,7 @@ public final class ProjectCoordinator {
         }
         
         let locale = locale ?? selection.locale
-        let fitted = fitted(set: set, deviceClass: target.deviceClass, locale: locale).fitted(for: slide.id)
+        let fitted = fitted(set: set, deviceClass: target.deviceClass, locale: locale, including: slide.id).fitted(for: slide.id)
         
         return Resolver.resolve(ResolveRequest(
             slide: slide,

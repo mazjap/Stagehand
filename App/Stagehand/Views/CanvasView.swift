@@ -94,6 +94,14 @@ struct CanvasView: View {
             .dropDestination(for: URL.self) { urls, _ in
                 coordinator.handle(.importCapturesToCanvas(DroppedFile.load(from: urls)))
             }
+            .overlay(alignment: .top) {
+                if !coordinator.isEditingTemplate, let slide = coordinator.currentSlide, !slide.isOn(coordinator.currentDeviceClass) {
+                    OffDeviceBanner(title: slide.title, device: coordinator.currentDeviceClass) {
+                        coordinator.handle(.setSlideOn(slide.id, coordinator.currentDeviceClass, true))
+                    }
+                    .padding()
+                }
+            }
             .overlay(alignment: .bottom) {
                 if !coordinator.importIssues.isEmpty {
                     ImportIssuesBanner(issues: coordinator.importIssues, onDismiss: { coordinator.handle(.dismissImportIssues) })
@@ -538,6 +546,36 @@ private struct CanvasBar: View {
         
         let next = (index + delta + set.slideIDs.count) % set.slideIDs.count
         coordinator.handle(.selectCell(CellID(setID: set.id, slideID: set.slideIDs[next], targetID: target)))
+    }
+}
+
+/// Says the slide on the canvas is off for the device it's shown on, so it isn't exported there.
+private struct OffDeviceBanner: View {
+    private let title: String
+    private let device: DeviceClass
+    private let onShow: () -> Void
+    
+    init(title: String, device: DeviceClass, onShow: @escaping () -> Void) {
+        self.title = title
+        self.device = device
+        self.onShow = onShow
+    }
+    
+    var body: some View {
+        HStack(spacing: 10) {
+            Image(systemName: "eye.slash")
+                .foregroundStyle(.secondary)
+                .accessibilityHidden(true)
+            
+            Text("\u{201C}\(title)\u{201D} is off on \(device.displayName), so it isn't exported there.")
+                .font(.callout)
+            
+            Button("Show on \(device.displayName)", action: onShow)
+                .controlSize(.small)
+        }
+        .padding(.horizontal, 12)
+        .padding(.vertical, 8)
+        .background(.regularMaterial, in: Capsule())
     }
 }
 

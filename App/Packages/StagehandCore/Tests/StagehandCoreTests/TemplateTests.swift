@@ -279,4 +279,46 @@ import Testing
         #expect(template.placeholder == .standard)
         #expect(template.name == "Old")
     }
+    
+    // MARK: - Text sizes
+    
+    /// Regression test: auto-fit only fitted the slides that are on a device, so a slide shown on a device it's off
+    /// for (all of TrekPoint's slides on iPad) was drawn at the template set's full size, overflowing its box.
+    @Test func aSlideShownOnADeviceItsOffForIsStillFitted() throws {
+        let (coordinator, _) = make()
+        let set = coordinator.project.mainLineup
+        let slide = set.slideIDs[0]
+        coordinator.handle(.setText(.primary, "Bring everything along"))
+        coordinator.handle(.setSlideOn(slide, .pad, false))
+        coordinator.handle(.selectCell(CellID(setID: set.id, slideID: slide, targetID: "ipad-13")))
+        
+        let scene = try #require(coordinator.canvasScene)
+        let full = coordinator.project.style.primary.size[.pad] * 2064
+        #expect(try #require(scene.primary).font.size < full)
+    }
+    
+    /// Regression test: the template editor fitted its placeholder on its own, so its text was a different size from
+    /// every slide made from it (on iPad, 60% of the size while the slides were at 100%).
+    @Test func aTemplateDrawsItsTextAtTheSizeItsSlidesUse() throws {
+        let (coordinator, _) = make()
+        coordinator.handle(.setText(.primary, "Bring everything along"))
+        let shared = try #require(coordinator.fitted(set: coordinator.project.mainLineup, deviceClass: .phone, locale: "en-US").sizes[.primary])
+        #expect(shared < coordinator.project.style.primary.size[.phone])
+        
+        coordinator.handle(.selectTemplate(.straight))
+        #expect(try #require(coordinator.canvasScene?.primary).font.size == shared * 1320)
+        
+        // Each slide shrinking only to fit: the template shows the template set's size, as a slide that fits does.
+        coordinator.handle(.editStyle("Change Auto-fit") { style, _ in style.autoFitScope = .slide })
+        #expect(try #require(coordinator.canvasScene?.primary).font.size == coordinator.project.style.primary.size[.phone] * 1320)
+    }
+    
+    @Test func aPlaceholderTooLongForTheSizeIsReported() {
+        let (coordinator, _) = make()
+        coordinator.handle(.selectTemplate(.straight))
+        #expect(coordinator.placeholderOverflow(.straight, targetID: "iphone-dynamic-island-large").isEmpty)
+        
+        coordinator.handle(.setPlaceholder(.straight, .primary, "A placeholder headline that goes on far longer than any box"))
+        #expect(coordinator.placeholderOverflow(.straight, targetID: "iphone-dynamic-island-large") == [.primary])
+    }
 }

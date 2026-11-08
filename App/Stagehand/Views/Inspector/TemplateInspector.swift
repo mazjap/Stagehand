@@ -54,6 +54,15 @@ struct TemplateInspector: View {
                     .font(.caption)
                     .foregroundStyle(.secondary)
                     .fixedSize(horizontal: false, vertical: true)
+                
+                let overflowing = coordinator.placeholderOverflow(template.id, targetID: coordinator.selection.targetID)
+                
+                if !overflowing.isEmpty {
+                    Label("The \(overflowing.map { $0.displayName.lowercased() }.joined(separator: " and ")) placeholder is longer than fits at the size slides use on \(device.displayName). Slides with text this long shrink; shorten it, or make the text smaller in the Template Set.", systemImage: "exclamationmark.triangle")
+                        .font(.caption)
+                        .foregroundStyle(.orange)
+                        .fixedSize(horizontal: false, vertical: true)
+                }
             }
             
             Divider()
