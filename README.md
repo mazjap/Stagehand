@@ -19,6 +19,7 @@ Stagehand is young (the kit is 0.x), and was built for the author's own apps fir
 - [The capture kit](#the-capture-kit)
 - [Repository layout](#repository-layout)
 - [Development](#development)
+- [License](#license)
 
 ## Requirements
 
@@ -237,3 +238,7 @@ STAGEHAND_E2E=1 swift test --package-path App/Packages/StagehandCore --filter En
 ```
 
 The renderer's snapshot tests run on macOS 27 and are skipped elsewhere. `CLAUDE.md` has the architecture, conventions and gotchas, and is the place to start before changing anything.
+
+## License
+
+Stagehand is available under the [MIT License](LICENSE). Apple's product bezels aren't part of it: they're downloaded from Apple Design Resources under Apple's own license, which you agree to in the app, and they're never in this repository.
