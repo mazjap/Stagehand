@@ -217,6 +217,12 @@ PLAN.md's Launching and new projects, Templates, Devices, and Bezels from Apple 
   - Done when an upload plan test shows no reorder with the option on.
 - [x] **9.8 Every layer of Apple's bezels:** not needed. Apple's PNGs already draw the whole device (frame, side buttons, and the Dynamic Island over the screen, which `SceneView` draws above the capture), and the Photoshop files have no separate layers for them (open question 11).
 
+## 10. Linking an app
+
+- [ ] **10.1 Pick a scheme, and let it decide the test target:** the link sheet asks for a scheme and a test target, which look like the same choice, and a full run ignores the test target (only Recapture uses it). TrekPoint was linked to the `TrekPoint` scheme with `TrekPointScreenshots` as its target, so a run ran the app's unit and UI tests instead of its screenshots. Read the chosen scheme's test targets (its test action, or its test plan), fill in the test target from them, and only ask when there's more than one. Full runs pass `-only-testing:<test target>`, and a saved link whose scheme doesn't include its target gets a clear warning rather than running the wrong tests. Update `README.md` and `skills/stagehand/SKILL.md`.
+  - Also fixes picking the `.xctestrun`: derived data is shared per project, and the runner takes the name that sorts last, so after switching from `TrekPoint` to `TrekPointScreenshots` it would still pick the old `TrekPoint_…` file. Pick the current scheme's file instead.
+  - Done when tests show a scheme with one test target needs no choice, a scheme with several asks, a full run's command line has `-only-testing:`, a mismatched link warns, and a scheme change uses the new scheme's `.xctestrun` with the old one still on disk.
+
 ## Every September
 
 When new devices and an Xcode release arrive:
