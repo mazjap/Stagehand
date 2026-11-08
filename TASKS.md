@@ -223,6 +223,18 @@ PLAN.md's Launching and new projects, Templates, Devices, and Bezels from Apple 
   - Also fixes picking the `.xctestrun`: derived data is shared per project, and the runner takes the name that sorts last, so after switching from `TrekPoint` to `TrekPointScreenshots` it would still pick the old `TrekPoint_…` file. Pick the current scheme's file instead.
   - Done when tests show a scheme with one test target needs no choice, a scheme with several asks, a full run's command line has `-only-testing:`, a mismatched link warns, and a scheme change uses the new scheme's `.xctestrun` with the old one still on disk.
 
+## 11. Watching a capture run
+
+- [ ] **11.1 Progress you can see without leaving the editor:** a small console in the inspector's Project tab, showing the current step and the steps before it (building, preparing each simulator, each test starting and finishing), with a progress bar under it, so a long run clearly hasn't stalled or failed. It doesn't block anything. The steps come from the runner's events plus `xcodebuild`'s `Test Case … started`/`passed`/`failed` lines, which are already in the log (`RunLogView` shows the raw log in a sheet today). The bar counts finished tests against the plan's.
+  - Pressing Run Captures shows an alert: **Capture Started**, "Stagehand keeps capturing in the background, so you can keep working. Follow along in the Project tab of the inspector.", with **OK** and **See Progress** (which opens the inspector on the Project tab).
+  - Done when tests feed recorded `xcodebuild` output through the parser and get the right steps and progress, including a failed test and a cancelled run.
+- [ ] **11.2 Show each screenshot as its test finishes:** captures only import when a device's whole pass ends, because the runner reads them from the result bundle, which `xcodebuild` finishes writing at the end. So the kit needs to write each capture and its metadata to a folder the runner names (a new `TEST_RUNNER_STAGEHAND_*` setting; a simulator can write to the Mac's disk), and the runner watches that folder and imports each one, so its cell updates right away. The result bundle stays the final word when the pass ends.
+  - Apps have to update to the new kit to get this, and apps that attach plain screenshots without the kit keep importing per pass. Decide whether one run stays one undo step.
+  - Done when a runner test with a fake process runner shows a capture imported before its pass ends, and nothing imported twice once the pass ends.
+- [ ] **11.3 An option to run devices at the same time:** each device has its own simulator, so passes for different devices could overlap (the iPhone, iPad and Duo all at once). Off by default, since it's heavier on the Mac, and slow-loading content may need longer timeouts.
+  - Limits: simulators still boot one at a time (two booting at once can crash CoreSimulator), the Duo's outer pass still comes before its inner one since they share a simulator, the Duo's unfold prompt can't hold up the other devices, and a Mac pass runs alone since it drives the real desktop. The console (11.1) has to show several devices at once.
+  - Done when a runner test with a fake process runner shows those limits hold, and that one device failing doesn't stop the others. Then run it for real once, end to end.
+
 ## Every September
 
 When new devices and an Xcode release arrive:
