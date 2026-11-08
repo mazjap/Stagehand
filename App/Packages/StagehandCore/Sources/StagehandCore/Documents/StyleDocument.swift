@@ -19,6 +19,9 @@ public final class StyleDocument: Document, EditableDocument {
     @ObservationIgnored public var fileConfiguration: URLDocumentConfiguration?
     public private(set) var loadGeneration = 0
     
+    /// Why the file couldn't be read. While it's set, the window shows this instead of the editor, and saving is refused.
+    public private(set) var loadFailure: DocumentError?
+    
     public var kind: DocumentKind {
         .style
     }
@@ -32,28 +35,49 @@ public final class StyleDocument: Document, EditableDocument {
         self.bezels = contents.bezels
     }
     
+    // MARK: - Functions
+    
+    /// Reads a package, catching what goes wrong so the document can show it.
+    public static func load(_ package: FileWrapper) -> DocumentSnapshot {
+        let files = package.packageFiles
+        
+        return DocumentSnapshot { () throws(DocumentError) in
+            try StylePackage.read(files: files)
+        }
+    }
+    
     // MARK: - Document
     
-    public func reader(configuration: sending ReadConfiguration) -> sending FileWrapperDocumentReader<ProjectContents> {
+    public func reader(configuration: sending ReadConfiguration) -> sending FileWrapperDocumentReader<DocumentSnapshot> {
         FileWrapperDocumentReader(configuration) { package in
-            try StylePackage.read(files: package.packageFiles)
+            Self.load(package)
         }
     }
     
     @MainActor
-    public func apply(snapshot: sending ProjectContents, previous: sending ProjectContents?) async throws {
-        contents = snapshot
-        loadGeneration += 1
+    public func apply(snapshot: sending DocumentSnapshot, previous: sending DocumentSnapshot?) async throws {
+        switch snapshot {
+        case let .contents(contents):
+            self.contents = contents
+            loadFailure = nil
+            loadGeneration += 1
+        case let .unreadable(error):
+            loadFailure = error
+        }
     }
     
-    public func writer(configuration: sending WriteConfiguration) -> sending FileWrapperDocumentWriter<ProjectContents> {
+    public func writer(configuration: sending WriteConfiguration) -> sending FileWrapperDocumentWriter<DocumentSnapshot> {
         FileWrapperDocumentWriter(configuration) { snapshot, _ in
-            FileWrapper(packageFiles: try StylePackage.files(snapshot))
+            FileWrapper(packageFiles: try StylePackage.files(try snapshot.contentsToWrite()))
         }
     }
     
     @MainActor
-    public func snapshot(contentType: UTType) async throws -> sending ProjectContents {
-        contents
+    public func snapshot(contentType: UTType) async throws -> sending DocumentSnapshot {
+        if let loadFailure {
+            throw loadFailure
+        }
+        
+        return .contents(contents)
     }
 }

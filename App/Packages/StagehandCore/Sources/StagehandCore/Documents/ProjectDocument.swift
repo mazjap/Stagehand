@@ -24,6 +24,9 @@ public final class ProjectDocument: Document, EditableDocument {
     /// Bumped each time a new snapshot is applied from disk, so coordinators can reload derived state.
     public private(set) var loadGeneration = 0
     
+    /// Why the file couldn't be read. While it's set, the window shows this instead of the editor, and saving is refused.
+    public private(set) var loadFailure: DocumentError?
+    
     public var kind: DocumentKind {
         .project
     }
@@ -37,28 +40,47 @@ public final class ProjectDocument: Document, EditableDocument {
         self.bezels = contents.bezels
     }
     
-    // MARK: - Document
+    // MARK: - Functions
     
-    public func reader(configuration: sending ReadConfiguration) -> sending FileWrapperDocumentReader<ProjectContents> {
-        FileWrapperDocumentReader(configuration) { package in
+    /// Reads a package, catching what goes wrong so the document can show it.
+    public static func load(_ package: FileWrapper) -> DocumentSnapshot {
+        DocumentSnapshot { () throws(DocumentError) in
             try ProjectPackage.read(package)
         }
     }
     
-    @MainActor
-    public func apply(snapshot: sending ProjectContents, previous: sending ProjectContents?) async throws {
-        contents = snapshot
-        loadGeneration += 1
-    }
+    // MARK: - Document
     
-    public func writer(configuration: sending WriteConfiguration) -> sending FileWrapperDocumentWriter<ProjectContents> {
-        FileWrapperDocumentWriter(configuration) { snapshot, previous in
-            try ProjectPackage.write(snapshot, previous: previous)
+    public func reader(configuration: sending ReadConfiguration) -> sending FileWrapperDocumentReader<DocumentSnapshot> {
+        FileWrapperDocumentReader(configuration) { package in
+            Self.load(package)
         }
     }
     
     @MainActor
-    public func snapshot(contentType: UTType) async throws -> sending ProjectContents {
-        contents
+    public func apply(snapshot: sending DocumentSnapshot, previous: sending DocumentSnapshot?) async throws {
+        switch snapshot {
+        case let .contents(contents):
+            self.contents = contents
+            loadFailure = nil
+            loadGeneration += 1
+        case let .unreadable(error):
+            loadFailure = error
+        }
+    }
+    
+    public func writer(configuration: sending WriteConfiguration) -> sending FileWrapperDocumentWriter<DocumentSnapshot> {
+        FileWrapperDocumentWriter(configuration) { snapshot, previous in
+            try ProjectPackage.write(try snapshot.contentsToWrite(), previous: previous)
+        }
+    }
+    
+    @MainActor
+    public func snapshot(contentType: UTType) async throws -> sending DocumentSnapshot {
+        if let loadFailure {
+            throw loadFailure
+        }
+        
+        return .contents(contents)
     }
 }

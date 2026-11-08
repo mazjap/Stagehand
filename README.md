@@ -42,7 +42,7 @@ The core tests need none of this (see [Development](#development)).
 
 A **project** (`.stagehand`) holds one app's screenshots: its devices, slides, captures, fonts and bezels. A **template set** (`.stagehandstyle`) is a reusable look: colors, fonts, text styles and templates. Every project has its own copy of a template set, which you can save to the library and reuse.
 
-Stagehand opens to a **Welcome** window with **Open…**, **New Project** (and **New Template Set** in its menu), and your recent documents. **New Project** asks for:
+Stagehand opens to a **Welcome** window with **Open…**, **New Project** (and **New Template Set** in its menu), and your recent documents. A file Stagehand can't read opens to the error in place of the editor, and it's never saved over. **New Project** asks for:
 
 - **Devices:** iPhone, iPad, iPhone Duo (outer and inner displays), Apple Watch, Mac. Start with one; add more later in the **Project** inspector.
 - **A template set:** a built-in starter, one from your library, or **Start from Scratch**.

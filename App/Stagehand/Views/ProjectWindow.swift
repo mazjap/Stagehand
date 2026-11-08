@@ -32,6 +32,14 @@ struct ProjectWindow: View {
     }
     
     var body: some View {
+        if let failure = document.loadFailure {
+            UnreadableDocumentView(fileName: document.fileConfiguration?.fileURL?.lastPathComponent, failure: failure)
+        } else {
+            editor
+        }
+    }
+    
+    private var editor: some View {
         NavigationSplitView {
             SidebarView(coordinator: coordinator)
                 .navigationSplitViewColumnWidth(min: 220, ideal: 260)
@@ -176,7 +184,41 @@ struct ProjectWindow: View {
     }
 }
 
+/// Shown in place of the editor when a document's file can't be read, so nothing can be edited and saved over it.
+private struct UnreadableDocumentView: View {
+    private let fileName: String?
+    private let failure: DocumentError
+    
+    #if os(macOS)
+    @Environment(\.dismissWindow) private var dismissWindow
+    #endif
+    
+    init(fileName: String?, failure: DocumentError) {
+        self.fileName = fileName
+        self.failure = failure
+    }
+    
+    var body: some View {
+        ContentUnavailableView {
+            Label(fileName.map { "Can't Open \($0)" } ?? "Can't Open This Document", systemImage: "exclamationmark.triangle")
+        } description: {
+            Text("The file wasn't changed. It may have been saved by a newer build of Stagehand, so try updating and opening it again.\n\n\(failure.errorDescription ?? String(describing: failure))")
+                .textSelection(.enabled)
+        }
+        .frame(minWidth: 600, minHeight: 400)
+        #if os(macOS)
+        .task {
+            dismissWindow(id: WelcomeWindow.id)
+        }
+        #endif
+    }
+}
+
 #Preview {
     ProjectWindow(document: ProjectDocument(contents: ProjectContents(project: .fixture())))
         .frame(width: 1200, height: 800)
+}
+
+#Preview("Can't Be Read") {
+    UnreadableDocumentView(fileName: "TrekPoint.stagehand", failure: .missingFile("project.json"))
 }

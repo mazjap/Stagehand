@@ -28,6 +28,9 @@ public protocol EditableDocument: AnyObject, Observable {
     /// Bumped each time a snapshot is applied from disk.
     var loadGeneration: Int { get }
     
+    /// Why the file couldn't be read, in which case the document's contents aren't the file's and it refuses to save.
+    var loadFailure: DocumentError? { get }
+    
     /// Where the document is on disk (`nil` until a new one is saved), as `makeDocument` was given it.
     var fileConfiguration: URLDocumentConfiguration? { get }
 }
