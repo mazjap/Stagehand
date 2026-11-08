@@ -283,7 +283,9 @@ private struct TextLayer: View {
             .foregroundStyle(text.color.color)
             .multilineTextAlignment(text.alignment.textAlignment)
             .fixedSize(horizontal: false, vertical: true)
-            .frame(width: text.frame.width)
+            // NOTE: - A line shorter than the box is narrower than this width, so the frame aligns it (alignment
+            // within the text only aligns its lines against each other).
+            .frame(width: text.frame.width, alignment: Alignment(horizontal: text.alignment.horizontalAlignment, vertical: .top))
             .frame(
                 width: text.frame.width,
                 height: text.frame.height,
