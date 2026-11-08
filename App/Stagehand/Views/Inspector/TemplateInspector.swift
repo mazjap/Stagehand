@@ -283,23 +283,6 @@ struct TextPlacementRows: View {
             .pickerStyle(.segmented)
             .labelsHidden()
         }
-        
-        InspectorRow("Vertical") {
-            Picker("Vertical", selection: binding(\.verticalAlignment)) {
-                Text("Top").tag(VerticalAlign.top)
-                Text("Middle").tag(VerticalAlign.center)
-                Text("Bottom").tag(VerticalAlign.bottom)
-            }
-            .pickerStyle(.segmented)
-            .labelsHidden()
-        }
-        
-        InspectorRow("Lines") {
-            Stepper(value: binding(\.lineLimit), in: 1...6) {
-                Text("\(placement.lineLimit)")
-                    .monospacedDigit()
-            }
-        }
     }
     
     private func binding<T>(_ keyPath: WritableKeyPath<TextPlacement, T>) -> Binding<T> {

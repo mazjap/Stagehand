@@ -235,8 +235,9 @@ public struct ResolvedText: Hashable, Sendable {
     public var lineSpacing: Double
     public var alignment: TextAlign
     public var verticalAlignment: VerticalAlign
+    
+    /// As tall as the lines the text wraps to (``ResolveRequest/lineCounts``).
     public var frame: CGRect
-    public var lineLimit: Int
 }
 
 /// Something a cell is flagged for.
@@ -250,7 +251,6 @@ public enum SceneFlag: Hashable, Sendable {
     case missingCapture(CaptureAddress)
     case captureSizeMismatch(CaptureAddress)
     case missingBezel(DeviceClass)
-    case overflow(TextRole)
     case quirkReview(CaptureAddress, quirks: [String])
     
     public enum Severity: Int, Comparable, Sendable {
@@ -269,7 +269,7 @@ public enum SceneFlag: Hashable, Sendable {
         switch self {
         case .templateFallback: .info
         case .textFallback, .captureFallbackLocale, .missingBezel, .quirkReview, .captureSizeMismatch, .missingImage: .warning
-        case .missingText, .missingLayout, .missingCapture, .overflow: .error
+        case .missingText, .missingLayout, .missingCapture: .error
         }
     }
     
@@ -284,7 +284,6 @@ public enum SceneFlag: Hashable, Sendable {
         case let .missingCapture(address): "No capture for \(address.key) on \(address.deviceClass.displayName) (\(address.locale))"
         case let .captureSizeMismatch(address): "The \(address.key) capture's size doesn't match \(address.deviceClass.displayName)"
         case let .missingBezel(device): "No bezel for \(device.displayName), so a plain frame is drawn"
-        case let .overflow(role): "\(role.displayName) text doesn't fit, even at the smallest size"
         case let .quirkReview(address, quirks): "\(address.key) was corrected for \(quirks.joined(separator: ", ")) on a newer runtime; check it once"
         }
     }

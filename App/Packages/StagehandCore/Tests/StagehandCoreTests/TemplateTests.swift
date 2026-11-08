@@ -279,4 +279,43 @@ import Testing
         #expect(template.placeholder == .standard)
         #expect(template.name == "Old")
     }
+    
+    // MARK: - Text
+    
+    /// Regression test: text shrank to fit its box (auto-fit, with one size per lineup), so a template and the slides
+    /// made from it showed their text at very different sizes. Text is now always its style's size, everywhere.
+    @Test func textIsTheSameSizeOnATemplateAndEverySlide() throws {
+        let (coordinator, _) = make()
+        let set = coordinator.project.mainLineup
+        let style = coordinator.project.style.primary.size[.phone] * 1320
+        coordinator.handle(.setText(.primary, "Bring everything along on every trail you take this year"))
+        
+        for slide in set.slideIDs {
+            coordinator.handle(.selectCell(CellID(setID: set.id, slideID: slide, targetID: "iphone-dynamic-island-large")))
+            #expect(try #require(coordinator.canvasScene?.primary).font.size == style)
+        }
+        
+        coordinator.handle(.selectTemplate(.straight))
+        #expect(try #require(coordinator.canvasScene?.primary).font.size == style)
+        
+        // A slide shown on a device it's off for, too.
+        coordinator.handle(.setSlideOn(set.slideIDs[0], .pad, false))
+        coordinator.handle(.selectCell(CellID(setID: set.id, slideID: set.slideIDs[0], targetID: "ipad-13")))
+        #expect(try #require(coordinator.canvasScene?.primary).font.size == coordinator.project.style.primary.size[.pad] * 2064)
+    }
+    
+    /// Long text wraps onto more lines, and its box grows to fit them, so the canvas's handles and snapping match
+    /// what's drawn.
+    @Test func longTextWrapsAndItsBoxGrows() throws {
+        let (coordinator, _) = make()
+        let short = try #require(coordinator.canvasScene?.primary)
+        
+        coordinator.handle(.setText(.primary, "Bring everything along on every trail you take this year"))
+        let long = try #require(coordinator.canvasScene?.primary)
+        
+        #expect(long.font.size == short.font.size)
+        #expect(long.frame.width == short.frame.width)
+        #expect(long.frame.height > short.frame.height * 1.5)
+        #expect(long.frame.minY == short.frame.minY)
+    }
 }

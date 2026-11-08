@@ -55,13 +55,13 @@ A **template** places three standard elements, **Primary Text**, **Secondary Tex
 - A template shows its own **placeholder text** (set in the **Template** inspector), never a slide's. New slides start with it.
 - **Drag a template** onto the slide list or the contact sheet to make a slide. A slide can use one template on iPhone and another on iPad.
 - On a slide, elements are **locked** to the template. Moving one asks first: **Edit Template Instead**, **Detach This Slide** (only this slide moves, and stops following the template for that element), or **Cancel**. **Reset to Template** undoes a detach.
-- Each slide can be turned off for any device, and every device shows the slides in the same order. **Custom product pages** (in the sidebar's **Lineups**) reuse slides from the same pool.
+- Each slide can be turned off for any device, and every device shows the slides in the same order. A slide that's off for the device on the canvas says so, with a button to turn it on. **Custom product pages** (in the sidebar's **Lineups**) reuse slides from the same pool.
 
 ### Text
 
 Fonts, sizes, colors, letter case, tracking and line spacing belong to the template set (the **Template Set** inspector), so every template shares them. Sizes are in **points on the screenshot** (a point is a pixel of the exported image, as in design apps), and every slider has a field to type a number. Fonts you choose are embedded in the project.
 
-**Auto-fit** shrinks text that doesn't fit its box. **Text Size: Same on Every Slide** gives every slide on a device the size the longest text fits at; **Shrink Only to Fit** shrinks only the slides that need it. The **Slide** inspector says when, and why, a slide's text was shrunk.
+Text is always drawn at its size, on every slide and in the template editor, and **wraps** to as many lines as it needs at its box's width: a text box only has a width, and grows (away from its anchor point) to fit its lines. A single word wider than its box breaks across lines, so keep sizes and box widths in proportion to your longest words.
 
 ### Bezels
 

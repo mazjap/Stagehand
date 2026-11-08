@@ -48,18 +48,6 @@ extension ImageRef {
     }
 }
 
-/// Text sizes from auto-fit for one set, device class and locale, as fractions of the canvas width.
-public struct FittedText: Hashable, Sendable {
-    public var sizes: [TextRole: Double]
-    
-    /// Roles whose text didn't fit this slide even at the minimum size.
-    public var overflowing: Set<TextRole>
-    
-    public init(sizes: [TextRole: Double] = [:], overflowing: Set<TextRole> = []) {
-        self.sizes = sizes
-        self.overflowing = overflowing
-    }
-}
 
 /// Everything a resolve reads.
 public struct ResolveRequest: Hashable, Sendable {
@@ -70,7 +58,11 @@ public struct ResolveRequest: Hashable, Sendable {
     public var sourceLocale: LocaleID
     public var captures: CaptureCatalog
     public var bezels: BezelCatalog
-    public var fitted: FittedText?
+    
+    /// How many lines each text element wraps to, measured outside the resolver
+    /// (``Resolver/lineCounts(in:measurer:)``). Text is drawn at its style's size and wraps as it needs; this only
+    /// sets its box's height. A missing element is one line.
+    public var lineCounts: [ElementRef: Int]
     
     /// Each font's line height as a multiple of its size, measured outside the resolver. A missing font uses 1.2.
     public var lineHeights: [FontSpec: Double]
@@ -89,7 +81,7 @@ public struct ResolveRequest: Hashable, Sendable {
         sourceLocale: LocaleID,
         captures: CaptureCatalog,
         bezels: BezelCatalog = .empty,
-        fitted: FittedText? = nil,
+        lineCounts: [ElementRef: Int] = [:],
         lineHeights: [FontSpec: Double] = [:],
         canvas: CGSize? = nil,
         assets: [String: CGSize] = [:]
@@ -101,7 +93,7 @@ public struct ResolveRequest: Hashable, Sendable {
         self.sourceLocale = sourceLocale
         self.captures = captures
         self.bezels = bezels
-        self.fitted = fitted
+        self.lineCounts = lineCounts
         self.lineHeights = lineHeights
         self.canvas = canvas ?? CGSize(width: target.exportSize.width, height: target.exportSize.height)
         self.assets = assets
@@ -110,8 +102,8 @@ public struct ResolveRequest: Hashable, Sendable {
 
 /// Turns a slide, its style and a target into a ``ResolvedScene``.
 ///
-/// > Warning: Keep this pure. Anything that measures, loads or renders happens before (auto-fit's sizes come in
-/// > through ``ResolveRequest/fitted``) or after (the renderer loads the scene's ``ImageRef``s).
+/// > Warning: Keep this pure. Anything that measures, loads or renders happens before (wrapped text's line counts
+/// > come in through ``ResolveRequest/lineCounts``) or after (the renderer loads the scene's ``ImageRef``s).
 public enum Resolver {
     /// The line height used for a font no one has measured.
     public static let defaultLineHeight = 1.2
@@ -170,11 +162,7 @@ public enum Resolver {
                 flags.append(.textFallback(role, locale: request.locale))
             }
             
-            if request.fitted?.overflowing.contains(role) == true {
-                flags.append(.overflow(role))
-            }
-            
-            return resolveText(resolved.text, style: role, placement: layout.textPlacement(role), size: request.fitted?.sizes[role], request: request)
+            return resolveText(resolved.text, style: role, placement: layout.textPlacement(role), element: .text(role), request: request)
         }
         
         let primary = text(.primary)
@@ -196,7 +184,7 @@ public enum Resolver {
                     continue
                 }
                 
-                extras.append(ResolvedElement(id: element.id, content: .text(resolveText(string, style: element.textStyle, placement: textPlacement, size: nil, request: request))))
+                extras.append(ResolvedElement(id: element.id, content: .text(resolveText(string, style: element.textStyle, placement: textPlacement, element: .extra(element.id), request: request))))
             case let (.device, .device(devicePlacement)):
                 let key = content?.captureKey?[device] ?? ""
                 extras.append(ResolvedElement(id: element.id, content: .device(resolveDevice(devicePlacement, key: key, request: request, flags: &flags))))
@@ -336,16 +324,16 @@ public enum Resolver {
         )
     }
     
-    /// Text in a text style, in a placement. Without a fitted size, the style's size.
-    static func resolveText(_ string: String, style role: TextRole, placement: TextPlacement, size fitted: Double?, request: ResolveRequest) -> ResolvedText {
+    /// Text in a text style at the style's size, in a placement, with a box as tall as the lines it wraps to.
+    static func resolveText(_ string: String, style role: TextRole, placement: TextPlacement, element: ElementRef, request: ResolveRequest) -> ResolvedText {
         let device = request.target.deviceClass
         let canvas = request.canvas
         let textStyle = request.style.textStyle(role)
-        let size = (fitted ?? textStyle.size[device]) * canvas.width
+        let size = textStyle.size[device] * canvas.width
         let font = textStyle.font[device]
         let lineSpacing = textStyle.lineSpacing[device] * size
         let height = TextPlacement.height(
-            lineLimit: placement.lineLimit,
+            lines: request.lineCounts[element] ?? 1,
             fontSize: size,
             lineHeight: request.lineHeights[font] ?? defaultLineHeight,
             lineSpacing: lineSpacing
@@ -360,8 +348,7 @@ public enum Resolver {
             lineSpacing: lineSpacing,
             alignment: placement.alignment,
             verticalAlignment: placement.verticalAlignment,
-            frame: placement.frame(in: canvas, height: height),
-            lineLimit: placement.lineLimit
+            frame: placement.frame(in: canvas, height: height)
         )
     }
     

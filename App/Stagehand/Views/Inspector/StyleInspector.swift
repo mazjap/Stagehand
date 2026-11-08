@@ -83,35 +83,6 @@ struct StyleInspector: View {
             Divider()
             TextStyleEditor(coordinator: coordinator, role: role)
         }
-        
-        Divider()
-        
-        InspectorSection("Auto-fit") {
-            InspectorRow("Text Size") {
-                Picker("Text Size", selection: Binding(get: { style.autoFitScope }, set: { scope in
-                    coordinator.handle(.editStyle("Change Auto-fit") { style, _ in style.autoFitScope = scope })
-                })) {
-                    Text("Same on Every Slide").tag(AutoFitScope.lineup)
-                    Text("Shrink Only to Fit").tag(AutoFitScope.slide)
-                }
-                .labelsHidden()
-            }
-            
-            Text(style.autoFitScope == .lineup
-                 ? "Every slide on a device uses the size the longest text fits at, so the page looks even."
-                 : "Each slide keeps the template's size unless its own text doesn't fit.")
-                .font(.caption)
-                .foregroundStyle(.secondary)
-                .fixedSize(horizontal: false, vertical: true)
-            
-            InspectorRow("Smallest") {
-                SliderField(value: Binding(get: { style.autoFitMinimum }, set: { value in
-                    coordinator.handle(.editStyle("Change Auto-fit Minimum") { style, _ in style.autoFitMinimum = value })
-                }), in: 0.3...1, digits: 0) { editing in
-                    coordinator.handle(editing ? .beginGesture("Change Auto-fit Minimum") : .endGesture)
-                }
-            }
-        }
     }
     
     private func addToken() {

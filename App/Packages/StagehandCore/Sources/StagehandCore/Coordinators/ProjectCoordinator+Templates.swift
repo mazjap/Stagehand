@@ -22,8 +22,8 @@ extension ProjectCoordinator {
     }
     
     /// A template drawn on a target with its own placeholder text and no capture, never a slide's: a slide's text
-    /// and screenshot are its own, and editing them doesn't touch the template. The placeholder is fitted on its own,
-    /// the way a slide's text is.
+    /// and screenshot are its own, and editing them doesn't touch the template. Text is at its style's size, as on
+    /// every slide, and wraps as it needs.
     public func templateScene(_ id: TemplateID, targetID: DeviceTarget.ID?, canvas: CGSize? = nil) -> ResolvedScene? {
         guard let template = project.style.template(id) else {
             return nil
@@ -32,28 +32,19 @@ extension ProjectCoordinator {
         let target = targetID.flatMap(DeviceTable.standard.target(id:))
             ?? project.mainLineup.resolvedTargets().first
             ?? DeviceTable.standard.targets(in: .phone).first!
-        let slide = placeholderSlide(for: template)
-        let fitted = autoFit.result(
-            slides: [slide],
-            style: project.style,
-            target: target,
-            locale: selection.locale,
-            sourceLocale: project.sourceLocale
-        )
         
-        return Resolver.resolve(ResolveRequest(
-            slide: slide,
+        return TextWrapping.resolve(ResolveRequest(
+            slide: placeholderSlide(for: template),
             style: project.style,
             target: target,
             locale: selection.locale,
             sourceLocale: project.sourceLocale,
             captures: captureCatalog,
             bezels: bezels,
-            fitted: fitted.fitted(for: slide.id),
             lineHeights: lineHeights,
             canvas: canvas,
             assets: assetSizes
-        ))
+        ), measurer: measurer)
     }
     
     /// The stand-in slide a template is drawn with: its placeholder text in every locale, and no capture.
@@ -73,7 +64,7 @@ extension ProjectCoordinator {
         )
     }
     
-    /// One ID for every placeholder slide, so the fit cache keys on the text rather than a new ID each time.
+    /// One ID for every placeholder slide, so its scene (and thumbnail) stays the same while nothing changes.
     static let placeholderSlideID = UUID(uuidString: "00000000-0000-0000-0000-00000000F1A7")!
     
     /// The slides that use a template on any of their devices.
