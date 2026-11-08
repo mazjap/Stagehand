@@ -1,0 +1,500 @@
+{
+  "appLocales": [
+    "en-US"
+  ],
+  "bundleID": "com.mazjap.TrekPoint",
+  "formatVersion": 2,
+  "listingLocales": [
+    "en-US"
+  ],
+  "localeMap": {},
+  "name": "TrekPoint",
+  "sets": [
+    {
+      "devices": [
+        "phone",
+        "pad",
+        "duoOuter"
+      ],
+      "id": "00000000-0000-0000-0000-00000000B001",
+      "name": "iOS",
+      "slideIDs": [
+        "00000000-0000-0000-0000-00000000A001",
+        "00000000-0000-0000-0000-00000000A002",
+        "00000000-0000-0000-0000-00000000A003"
+      ],
+      "targets": [
+        "iphone-dynamic-island-large",
+        "ipad-13",
+        "iphone-duo-outer"
+      ]
+    },
+    {
+      "devices": [
+        "watch"
+      ],
+      "id": "00000000-0000-0000-0000-00000000B002",
+      "name": "watchOS",
+      "slideIDs": [
+        "00000000-0000-0000-0000-00000000A001",
+        "00000000-0000-0000-0000-00000000A004"
+      ],
+      "targets": [
+        "watch"
+      ]
+    },
+    {
+      "customProductPageID": "cpp-1",
+      "devices": [
+        "phone",
+        "pad",
+        "duoOuter"
+      ],
+      "id": "00000000-0000-0000-0000-00000000B003",
+      "name": "Hikers",
+      "slideIDs": [
+        "00000000-0000-0000-0000-00000000A003",
+        "00000000-0000-0000-0000-00000000A002"
+      ],
+      "targets": [
+        "iphone-dynamic-island-large",
+        "ipad-13",
+        "iphone-duo-outer"
+      ]
+    }
+  ],
+  "slides": {
+    "00000000-0000-0000-0000-00000000A001": {
+      "captureKey": {
+        "base": "read-the-land"
+      },
+      "id": "00000000-0000-0000-0000-00000000A001",
+      "nudges": {
+        "phone": {
+          "dx": -0.007650448143405889,
+          "dy": 0.007042253521126765,
+          "rotation": 0,
+          "scale": 1
+        }
+      },
+      "primary": {
+        "base": {
+          "en-US": "Read the land"
+        }
+      },
+      "secondary": {
+        "base": {
+          "en-US": "Topo maps with every trail, peak and spring"
+        }
+      },
+      "title": "Read the Land",
+      "variant": {
+        "base": "straight"
+      }
+    },
+    "00000000-0000-0000-0000-00000000A002": {
+      "captureKey": {
+        "base": "bring-it-along"
+      },
+      "id": "00000000-0000-0000-0000-00000000A002",
+      "nudges": {},
+      "primary": {
+        "base": {
+          "en-US": "Bring it along"
+        }
+      },
+      "secondary": {
+        "base": {
+          "en-US": "Offline maps for when the signal drops"
+        }
+      },
+      "title": "Bring It Along",
+      "variant": {
+        "base": "straight",
+        "overrides": {
+          "phone": "tilted"
+        }
+      }
+    },
+    "00000000-0000-0000-0000-00000000A003": {
+      "captureKey": {
+        "base": "mark-the-way"
+      },
+      "id": "00000000-0000-0000-0000-00000000A003",
+      "nudges": {
+        "phone": {
+          "dx": 0.1,
+          "dy": -0.05,
+          "rotation": 3,
+          "scale": 1.1
+        }
+      },
+      "primary": {
+        "base": {
+          "en-US": "Mark the way"
+        }
+      },
+      "secondary": {
+        "base": {
+          "en-US": "Pins, notes and photos on every route"
+        }
+      },
+      "title": "Mark the Way",
+      "variant": {
+        "base": "straight"
+      }
+    },
+    "00000000-0000-0000-0000-00000000A004": {
+      "captureKey": {
+        "base": "wrist"
+      },
+      "id": "00000000-0000-0000-0000-00000000A004",
+      "nudges": {},
+      "primary": {
+        "base": {
+          "en-US": "On Your Wrist"
+        }
+      },
+      "secondary": {
+        "base": {
+          "en-US": ""
+        }
+      },
+      "title": "On Your Wrist",
+      "variant": {
+        "base": "straight"
+      }
+    },
+    "00000000-0000-0000-0000-00000000A005": {
+      "captureKey": {
+        "base": "someday"
+      },
+      "id": "00000000-0000-0000-0000-00000000A005",
+      "nudges": {},
+      "primary": {
+        "base": {
+          "en-US": "Someday"
+        }
+      },
+      "secondary": {
+        "base": {
+          "en-US": ""
+        }
+      },
+      "title": "Someday",
+      "variant": {
+        "base": "straight"
+      }
+    }
+  },
+  "sourceLocale": "en-US",
+  "style": {
+    "autoFitMinimum": 0.6,
+    "background": {
+      "base": {
+        "linearGradient": {
+          "angle": 0,
+          "tokens": [
+            "background",
+            "backgroundEnd"
+          ]
+        }
+      }
+    },
+    "colors": {
+      "accent": {
+        "alpha": 1,
+        "blue": 0.23529411764705882,
+        "green": 0.6431372549019608,
+        "red": 1
+      },
+      "background": {
+        "alpha": 1,
+        "blue": 0.10196078431372549,
+        "green": 0.08627450980392157,
+        "red": 0.0784313725490196
+      },
+      "backgroundEnd": {
+        "alpha": 1,
+        "blue": 0.17647058823529413,
+        "green": 0.14901960784313725,
+        "red": 0.13333333333333333
+      },
+      "glow": {
+        "alpha": 1,
+        "blue": 0.23529411764705882,
+        "green": 0.6431372549019608,
+        "red": 1
+      },
+      "subline": {
+        "alpha": 1,
+        "blue": 0.8313725490196079,
+        "green": 0.803921568627451,
+        "red": 0.788235294117647
+      }
+    },
+    "id": "5A1B0C7E-2D3F-4A5B-8C6D-7E8F9A0B1C2D",
+    "layouts": {
+      "pad": {
+        "primary": {
+          "alignment": "center",
+          "anchor": "top",
+          "lineLimit": 1,
+          "position": {
+            "x": 0.5,
+            "y": 0.05
+          },
+          "verticalAlignment": "top",
+          "width": 0.8
+        },
+        "secondary": {
+          "alignment": "center",
+          "anchor": "top",
+          "lineLimit": 2,
+          "position": {
+            "x": 0.5,
+            "y": 0.14
+          },
+          "verticalAlignment": "top",
+          "width": 0.76
+        },
+        "variants": {
+          "straight": {
+            "anchor": "center",
+            "bareCornerRadius": 0.08,
+            "bezel": {
+              "matchTarget": {}
+            },
+            "glow": {
+              "blur": 0.06,
+              "colorToken": "glow",
+              "offset": {
+                "x": 0,
+                "y": 0
+              },
+              "opacity": 0.55,
+              "spread": 1.0
+            },
+            "position": {
+              "x": 0.5,
+              "y": 0.6
+            },
+            "rotation": 0,
+            "width": 0.78
+          },
+          "tilted": {
+            "anchor": "center",
+            "bareCornerRadius": 0.08,
+            "bezel": {
+              "matchTarget": {}
+            },
+            "glow": {
+              "blur": 0.06,
+              "colorToken": "glow",
+              "offset": {
+                "x": 0,
+                "y": 0
+              },
+              "opacity": 0.55,
+              "spread": 1.0
+            },
+            "position": {
+              "x": 0.55,
+              "y": 0.62
+            },
+            "rotation": 6,
+            "width": 0.8
+          }
+        }
+      },
+      "phone": {
+        "primary": {
+          "alignment": "center",
+          "anchor": "top",
+          "lineLimit": 2,
+          "position": {
+            "x": 0.4991499502062882,
+            "y": 0.055
+          },
+          "verticalAlignment": "top",
+          "width": 0.843400199174847
+        },
+        "secondary": {
+          "alignment": "center",
+          "anchor": "top",
+          "lineLimit": 2,
+          "position": {
+            "x": 0.5017000995874236,
+            "y": 0.10575117370892018
+          },
+          "verticalAlignment": "top",
+          "width": 0.8442025892730118
+        },
+        "variants": {
+          "straight": {
+            "anchor": "center",
+            "bareCornerRadius": 0.08,
+            "bezel": {
+              "matchTarget": {}
+            },
+            "glow": {
+              "blur": 0.06,
+              "colorToken": "glow",
+              "offset": {
+                "x": 0,
+                "y": 0
+              },
+              "opacity": 0.55,
+              "spread": 1.0
+            },
+            "position": {
+              "x": 0.5,
+              "y": 0.63
+            },
+            "rotation": 0,
+            "width": 0.8
+          },
+          "tilted": {
+            "anchor": "center",
+            "bareCornerRadius": 0.08,
+            "bezel": {
+              "matchTarget": {}
+            },
+            "glow": {
+              "blur": 0.06,
+              "colorToken": "glow",
+              "offset": {
+                "x": 0,
+                "y": 0
+              },
+              "opacity": 0.55,
+              "spread": 1.0
+            },
+            "position": {
+              "x": 0.62,
+              "y": 0.64
+            },
+            "rotation": 9,
+            "width": 0.86
+          },
+          "zoomed": {
+            "anchor": "center",
+            "bareCornerRadius": 0.08,
+            "bezel": {
+              "matchTarget": {}
+            },
+            "glow": {
+              "blur": 0.06,
+              "colorToken": "glow",
+              "offset": {
+                "x": 0,
+                "y": 0
+              },
+              "opacity": 0.55,
+              "spread": 1.0
+            },
+            "position": {
+              "x": 0.5,
+              "y": 0.78
+            },
+            "rotation": 0,
+            "width": 1.25
+          }
+        }
+      },
+      "watch": {
+        "primary": {
+          "alignment": "center",
+          "anchor": "top",
+          "lineLimit": 2,
+          "position": {
+            "x": 0.5,
+            "y": 0.04
+          },
+          "verticalAlignment": "top",
+          "width": 0.88
+        },
+        "secondary": {
+          "alignment": "center",
+          "anchor": "top",
+          "lineLimit": 1,
+          "position": {
+            "x": 0.5,
+            "y": 0.24
+          },
+          "verticalAlignment": "top",
+          "width": 0.84
+        },
+        "variants": {
+          "straight": {
+            "anchor": "center",
+            "bareCornerRadius": 0.22,
+            "bezel": {
+              "none": {}
+            },
+            "position": {
+              "x": 0.5,
+              "y": 0.66
+            },
+            "rotation": 0,
+            "width": 0.7
+          }
+        }
+      }
+    },
+    "name": "Dark Glow",
+    "primary": {
+      "colorToken": {
+        "base": "accent"
+      },
+      "font": {
+        "base": {
+          "postScriptName": "system-heavy"
+        }
+      },
+      "letterCase": {
+        "base": "uppercase"
+      },
+      "lineSpacing": {
+        "base": 0
+      },
+      "size": {
+        "base": 0.085,
+        "overrides": {
+          "pad": 0.06,
+          "watch": 0.1
+        }
+      },
+      "tracking": {
+        "base": 0.02
+      }
+    },
+    "secondary": {
+      "colorToken": {
+        "base": "subline"
+      },
+      "font": {
+        "base": {
+          "postScriptName": "system-medium"
+        }
+      },
+      "letterCase": {
+        "base": "asWritten"
+      },
+      "lineSpacing": {
+        "base": 0
+      },
+      "size": {
+        "base": 0.042,
+        "overrides": {
+          "pad": 0.03,
+          "watch": 0.06
+        }
+      },
+      "tracking": {
+        "base": 0
+      }
+    },
+    "version": 1
+  }
+}

@@ -1,0 +1,62 @@
+{
+  "devices" : [
+    {
+      "architecture" : "arm64",
+      "deviceId" : "F2DE7EA9-F6F2-4E34-87B7-532E07C7E80C",
+      "deviceName" : "Stagehand iphone-dynamic-island-large",
+      "modelName" : "iPhone 17 Pro Max",
+      "osBuildNumber" : "24A434",
+      "osVersion" : "27.0",
+      "platform" : "iOS Simulator"
+    }
+  ],
+  "testNodes" : [
+    {
+      "children" : [
+        {
+          "children" : [
+            {
+              "children" : [
+                {
+                  "duration" : "17s",
+                  "durationInSeconds" : 17.236396074295044,
+                  "name" : "testDarkScene()",
+                  "nodeIdentifier" : "FixtureScreenshots/testDarkScene()",
+                  "nodeIdentifierURL" : "test://com.apple.xcode/StagehandFixtureApp/StagehandFixtureAppScreenshots/FixtureScreenshots/testDarkScene",
+                  "nodeType" : "Test Case",
+                  "result" : "Passed"
+                },
+                {
+                  "duration" : "7s",
+                  "durationInSeconds" : 7.6544129848480225,
+                  "name" : "testLightScene()",
+                  "nodeIdentifier" : "FixtureScreenshots/testLightScene()",
+                  "nodeIdentifierURL" : "test://com.apple.xcode/StagehandFixtureApp/StagehandFixtureAppScreenshots/FixtureScreenshots/testLightScene",
+                  "nodeType" : "Test Case",
+                  "result" : "Passed"
+                }
+              ],
+              "name" : "FixtureScreenshots",
+              "nodeIdentifierURL" : "test://com.apple.xcode/StagehandFixtureApp/StagehandFixtureAppScreenshots/FixtureScreenshots",
+              "nodeType" : "Test Suite",
+              "result" : "Passed"
+            }
+          ],
+          "name" : "StagehandFixtureAppScreenshots",
+          "nodeIdentifierURL" : "test://com.apple.xcode/StagehandFixtureApp/StagehandFixtureAppScreenshots",
+          "nodeType" : "UI test bundle",
+          "result" : "Passed"
+        }
+      ],
+      "name" : "StagehandFixtureApp",
+      "nodeType" : "Test Plan",
+      "result" : "Passed"
+    }
+  ],
+  "testPlanConfigurations" : [
+    {
+      "configurationId" : "1",
+      "configurationName" : "Test Scheme Action"
+    }
+  ]
+}

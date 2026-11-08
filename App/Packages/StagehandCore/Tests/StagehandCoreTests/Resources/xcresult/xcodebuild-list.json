@@ -1,0 +1,19 @@
+{
+  "project" : {
+    "configurations" : [
+      "Debug",
+      "Release"
+    ],
+    "name" : "StagehandFixtureApp",
+    "schemes" : [
+      "StagehandCapture",
+      "StagehandFixtureApp",
+      "StagehandModel",
+      "StagehandScene"
+    ],
+    "targets" : [
+      "StagehandFixtureApp",
+      "StagehandFixtureAppScreenshots"
+    ]
+  }
+}

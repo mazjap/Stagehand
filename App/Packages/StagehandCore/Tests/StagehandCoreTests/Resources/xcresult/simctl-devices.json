@@ -1,0 +1,32 @@
+{
+  "devices": {
+    "com.apple.CoreSimulator.SimRuntime.iOS-27-0": [
+      {
+        "dataPath": "/Users/you/Library/Developer/CoreSimulator/Devices/F2DE7EA9-F6F2-4E34-87B7-532E07C7E80C/data",
+        "dataPathSize": 1401339904,
+        "logPath": "/Users/you/Library/Logs/CoreSimulator/F2DE7EA9-F6F2-4E34-87B7-532E07C7E80C",
+        "udid": "F2DE7EA9-F6F2-4E34-87B7-532E07C7E80C",
+        "lastUsedAt": "2026-10-28T00:16:21Z",
+        "isAvailable": true,
+        "logPathSize": 237568,
+        "deviceTypeIdentifier": "com.apple.CoreSimulator.SimDeviceType.iPhone-17-Pro-Max",
+        "state": "Booted",
+        "name": "Stagehand iphone-dynamic-island-large"
+      }
+    ],
+    "com.apple.CoreSimulator.SimRuntime.iOS-27-1": [
+      {
+        "dataPath": "/Users/you/Library/Developer/CoreSimulator/Devices/40DB6512-563B-4CC0-A0CA-A0D82BC95EA0/data",
+        "dataPathSize": 4830179328,
+        "logPath": "/Users/you/Library/Logs/CoreSimulator/40DB6512-563B-4CC0-A0CA-A0D82BC95EA0",
+        "udid": "40DB6512-563B-4CC0-A0CA-A0D82BC95EA0",
+        "lastUsedAt": "2026-10-27T21:48:24Z",
+        "isAvailable": true,
+        "logPathSize": 454656,
+        "deviceTypeIdentifier": "com.apple.CoreSimulator.SimDeviceType.iPhone-Duo",
+        "state": "Shutdown",
+        "name": "iPhone Duo"
+      }
+    ]
+  }
+}

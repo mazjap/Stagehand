@@ -1,0 +1,50 @@
+[
+  {
+    "attachments" : [
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "F2DE7EA9-F6F2-4E34-87B7-532E07C7E80C",
+        "deviceName" : "Stagehand iphone-dynamic-island-large",
+        "exportedFileName" : "E4DB71C8-4EFF-45A2-9150-3BF34BDCFB0F.json",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "stagehand.864184C9-C115-4883-AEBA-0FC24C8B4072_0_3A382E9C-04C7-4D6F-AA62-840E4CFC5DC6.meta",
+        "timestamp" : 1793146650.393
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "F2DE7EA9-F6F2-4E34-87B7-532E07C7E80C",
+        "deviceName" : "Stagehand iphone-dynamic-island-large",
+        "exportedFileName" : "CE75DCC9-6AB0-401C-A41F-57F95FF72459.png",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "stagehand.864184C9-C115-4883-AEBA-0FC24C8B4072_0_DAFD9F0F-A4F1-4172-8BBE-A8A032B9D702.dark-scene",
+        "timestamp" : 1793146650.39
+      }
+    ],
+    "testIdentifier" : "FixtureScreenshots/testDarkScene()",
+    "testIdentifierURL" : "test://com.apple.xcode/StagehandFixtureApp/StagehandFixtureAppScreenshots/FixtureScreenshots/testDarkScene"
+  },
+  {
+    "attachments" : [
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "F2DE7EA9-F6F2-4E34-87B7-532E07C7E80C",
+        "deviceName" : "Stagehand iphone-dynamic-island-large",
+        "exportedFileName" : "FAD49AE5-AF75-4CA6-977B-F2445EC356C6.json",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "stagehand.35D318D6-54E6-4289-9B28-1360D04E80B7_0_3AACD723-AB32-4261-96B2-94D1812300FF.meta",
+        "timestamp" : 1793146665.746
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "F2DE7EA9-F6F2-4E34-87B7-532E07C7E80C",
+        "deviceName" : "Stagehand iphone-dynamic-island-large",
+        "exportedFileName" : "DE0211E1-73FF-4763-BBB1-3AD5DC589CA4.png",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "stagehand.35D318D6-54E6-4289-9B28-1360D04E80B7_0_77DDC687-1082-4BDF-9C16-16FBCAB085C1.light-scene",
+        "timestamp" : 1793146665.745
+      }
+    ],
+    "testIdentifier" : "FixtureScreenshots/testLightScene()",
+    "testIdentifierURL" : "test://com.apple.xcode/StagehandFixtureApp/StagehandFixtureAppScreenshots/FixtureScreenshots/testLightScene"
+  }
+]

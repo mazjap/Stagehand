@@ -1,0 +1,115 @@
+{
+    "schemaVersion": 1,
+    "checkedAgainst": "2026-10",
+    "targets": [
+        {
+            "id": "iphone-duo-outer",
+            "name": "iPhone Duo (outer display)",
+            "deviceClass": "duoOuter",
+            "orientation": "portrait",
+            "isRequired": true,
+            "displayType": "APP_IPHONE_DUO_OUTER",
+            "displayTypeVerified": false,
+            "sizes": [
+                { "width": 1398, "height": 2034 }
+            ]
+        },
+        {
+            "id": "iphone-duo-inner",
+            "name": "iPhone Duo (inner display)",
+            "deviceClass": "duoInner",
+            "orientation": "portrait",
+            "isRequired": true,
+            "displayType": "APP_IPHONE_DUO_INNER",
+            "displayTypeVerified": false,
+            "sizes": [
+                { "width": 2007, "height": 2853 }
+            ]
+        },
+        {
+            "id": "iphone-dynamic-island-large",
+            "name": "iPhone with Dynamic Island (large)",
+            "deviceClass": "phone",
+            "orientation": "portrait",
+            "isRequired": false,
+            "displayType": "APP_IPHONE_67",
+            "displayTypeVerified": true,
+            "sizes": [
+                { "width": 1320, "height": 2868 },
+                { "width": 1290, "height": 2796 },
+                { "width": 1260, "height": 2736 }
+            ]
+        },
+        {
+            "id": "iphone-face-id-large",
+            "name": "iPhone with Face ID (large)",
+            "deviceClass": "phone",
+            "orientation": "portrait",
+            "isRequired": false,
+            "displayType": "APP_IPHONE_65",
+            "displayTypeVerified": true,
+            "sizes": [
+                { "width": 1284, "height": 2778 },
+                { "width": 1242, "height": 2688 }
+            ]
+        },
+        {
+            "id": "iphone-dynamic-island-medium",
+            "name": "iPhone with Dynamic Island (medium)",
+            "deviceClass": "phone",
+            "orientation": "portrait",
+            "isRequired": true,
+            "displayType": "APP_IPHONE_61",
+            "displayTypeVerified": true,
+            "sizes": [
+                { "width": 1206, "height": 2622 },
+                { "width": 1179, "height": 2556 }
+            ]
+        },
+        {
+            "id": "ipad-13",
+            "name": "iPad 13-inch",
+            "deviceClass": "pad",
+            "orientation": "portrait",
+            "isRequired": true,
+            "displayType": "APP_IPAD_PRO_3GEN_129",
+            "displayTypeVerified": true,
+            "sizes": [
+                { "width": 2064, "height": 2752 },
+                { "width": 2048, "height": 2732 }
+            ]
+        },
+        {
+            "id": "mac",
+            "name": "Mac",
+            "deviceClass": "mac",
+            "orientation": "landscape",
+            "isRequired": true,
+            "displayType": "APP_DESKTOP",
+            "displayTypeVerified": true,
+            "sizes": [
+                { "width": 2880, "height": 1800 },
+                { "width": 2560, "height": 1600 },
+                { "width": 1440, "height": 900 },
+                { "width": 1280, "height": 800 }
+            ]
+        },
+        {
+            "id": "watch",
+            "name": "Apple Watch",
+            "deviceClass": "watch",
+            "orientation": "portrait",
+            "isRequired": true,
+            "displayType": "APP_WATCH_ULTRA",
+            "displayTypeVerified": true,
+            "sizes": [
+                { "width": 422, "height": 514 },
+                { "width": 410, "height": 502 },
+                { "width": 416, "height": 496, "displayType": "APP_WATCH_SERIES_10" },
+                { "width": 396, "height": 484, "displayType": "APP_WATCH_SERIES_7" },
+                { "width": 368, "height": 448, "displayType": "APP_WATCH_SERIES_4" },
+                { "width": 312, "height": 390, "displayType": "APP_WATCH_SERIES_3" }
+            ]
+        }
+    ]
+}

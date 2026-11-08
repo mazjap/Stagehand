@@ -1,0 +1,14 @@
+.DS_Store
+.build/
+.swiftpm/
+DerivedData/
+xcuserdata/
+*.xcresult
+
+# Apple's Xcode skills, exported on each machine (see CLAUDE.md), and the links to them in .claude/skills/.
+# The Stagehand skill itself lives in skills/stagehand/ and is tracked, with its link.
+xcode-skills/
+.claude/skills/*
+!.claude/skills/stagehand
+.claude/settings.local.json
+.claude/worktrees/

@@ -1,0 +1,452 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 77;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		84165DDECE9B4853FD323AAF /* StagehandCore in Frameworks */ = {isa = PBXBuildFile; productRef = FABD546FA7C975E49EB294E2 /* StagehandCore */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		80CCBE1EBB49219B38E098C9 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = FC8F43566AC4405ACCD1FC92 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 2B82A684C90B06AC3D73DBFF;
+			remoteInfo = Stagehand;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		D6E662A3F6E15EB7B6A704D4 /* StagehandTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = StagehandTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		E1E105C6E592E721971026C1 /* Stagehand.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Stagehand.app; sourceTree = BUILT_PRODUCTS_DIR; };
+/* End PBXFileReference section */
+
+/* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
+		A2A29970A9275E5F991DFF19 /* Exceptions for "Stagehand" folder in "Stagehand" target */ = {
+			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
+			membershipExceptions = (
+				Info.plist,
+			);
+			target = 2B82A684C90B06AC3D73DBFF /* Stagehand */;
+		};
+/* End PBXFileSystemSynchronizedBuildFileExceptionSet section */
+
+/* Begin PBXFileSystemSynchronizedRootGroup section */
+		82B4961F54B6B7D7CD40680F /* Stagehand */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			exceptions = (
+				A2A29970A9275E5F991DFF19 /* Exceptions for "Stagehand" folder in "Stagehand" target */,
+			);
+			path = Stagehand;
+			sourceTree = "<group>";
+		};
+		CF392FAD554647D6A3F6BCE0 /* StagehandTests */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			path = StagehandTests;
+			sourceTree = "<group>";
+		};
+/* End PBXFileSystemSynchronizedRootGroup section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		0B4E8931B201A25CA82FBA98 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		3D5CB751A22487DF099CFDAC /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				84165DDECE9B4853FD323AAF /* StagehandCore in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		3A049E4FA4C6F7916B0E2783 = {
+			isa = PBXGroup;
+			children = (
+				82B4961F54B6B7D7CD40680F /* Stagehand */,
+				CF392FAD554647D6A3F6BCE0 /* StagehandTests */,
+				8EA64EE8F6B4B09A81B2FAD5 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		8EA64EE8F6B4B09A81B2FAD5 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				E1E105C6E592E721971026C1 /* Stagehand.app */,
+				D6E662A3F6E15EB7B6A704D4 /* StagehandTests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		2B82A684C90B06AC3D73DBFF /* Stagehand */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 89CB85BC6FE3C348504C7C1C /* Build configuration list for PBXNativeTarget "Stagehand" */;
+			buildPhases = (
+				B1FFD48BBF429F23C15E076F /* Sources */,
+				3D5CB751A22487DF099CFDAC /* Frameworks */,
+				43895F9D3306E20699D23FA5 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			fileSystemSynchronizedGroups = (
+				82B4961F54B6B7D7CD40680F /* Stagehand */,
+			);
+			name = Stagehand;
+			packageProductDependencies = (
+				FABD546FA7C975E49EB294E2 /* StagehandCore */,
+			);
+			productName = Stagehand;
+			productReference = E1E105C6E592E721971026C1 /* Stagehand.app */;
+			productType = "com.apple.product-type.application";
+		};
+		B7A61BBBB1D7F5B2F44864E0 /* StagehandTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 1C86D54998374CC6285344A3 /* Build configuration list for PBXNativeTarget "StagehandTests" */;
+			buildPhases = (
+				0343EBEA42E1DA8197A1613D /* Sources */,
+				0B4E8931B201A25CA82FBA98 /* Frameworks */,
+				C9C658287460EF14B0A3B2EA /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				CD35F86B5667EE234E3ED2DC /* PBXTargetDependency */,
+			);
+			fileSystemSynchronizedGroups = (
+				CF392FAD554647D6A3F6BCE0 /* StagehandTests */,
+			);
+			name = StagehandTests;
+			packageProductDependencies = (
+			);
+			productName = StagehandTests;
+			productReference = D6E662A3F6E15EB7B6A704D4 /* StagehandTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		FC8F43566AC4405ACCD1FC92 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				BuildIndependentTargetsInParallel = 1;
+				LastSwiftUpdateCheck = 2700;
+				LastUpgradeCheck = 2700;
+				TargetAttributes = {
+					2B82A684C90B06AC3D73DBFF = {
+						CreatedOnToolsVersion = 27.0;
+					};
+					B7A61BBBB1D7F5B2F44864E0 = {
+						CreatedOnToolsVersion = 27.0;
+						TestTargetID = 2B82A684C90B06AC3D73DBFF;
+					};
+				};
+			};
+			buildConfigurationList = EF05FA0DCE69C9524F2A058C /* Build configuration list for PBXProject "Stagehand" */;
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = 3A049E4FA4C6F7916B0E2783;
+			minimizedProjectReferenceProxies = 1;
+			packageReferences = (
+				562CBF13F2017E9F8E6AA038 /* XCLocalSwiftPackageReference "Packages/StagehandCore" */,
+			);
+			preferredProjectObjectVersion = 77;
+			productRefGroup = 8EA64EE8F6B4B09A81B2FAD5 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				2B82A684C90B06AC3D73DBFF /* Stagehand */,
+				B7A61BBBB1D7F5B2F44864E0 /* StagehandTests */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		43895F9D3306E20699D23FA5 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		C9C658287460EF14B0A3B2EA /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		0343EBEA42E1DA8197A1613D /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		B1FFD48BBF429F23C15E076F /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		CD35F86B5667EE234E3ED2DC /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 2B82A684C90B06AC3D73DBFF /* Stagehand */;
+			targetProxy = 80CCBE1EBB49219B38E098C9 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin XCBuildConfiguration section */
+		177F490E32A7FB93836ADFB6 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = HFR8F4BT7E;
+				GENERATE_INFOPLIST_FILE = YES;
+				MARKETING_VERSION = 0.1;
+				PRODUCT_BUNDLE_IDENTIFIER = com.mazjap.StagehandTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = auto;
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator macosx";
+				SUPPORTS_MACCATALYST = NO;
+				SWIFT_APPROACHABLE_CONCURRENCY = YES;
+				SWIFT_DEFAULT_ACTOR_ISOLATION = MainActor;
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 6.0;
+				TARGETED_DEVICE_FAMILY = 2;
+				"TEST_HOST[sdk=iphone*]" = "$(BUILT_PRODUCTS_DIR)/Stagehand.app/Stagehand";
+				"TEST_HOST[sdk=macosx*]" = "$(BUILT_PRODUCTS_DIR)/Stagehand.app/Contents/MacOS/Stagehand";
+			};
+			name = Release;
+		};
+		33F0A1C75D3C60DC562B92EE /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = Stagehand/Stagehand.entitlements;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = HFR8F4BT7E;
+				ENABLE_APP_SANDBOX = NO;
+				ENABLE_HARDENED_RUNTIME = NO;
+				ENABLE_PREVIEWS = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = Stagehand/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = Stagehand;
+				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.developer-tools";
+				INFOPLIST_KEY_LSSupportsOpeningDocumentsInPlace = YES;
+				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphone*]" = YES;
+				"INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents[sdk=iphone*]" = YES;
+				"INFOPLIST_KEY_UILaunchScreen_Generation[sdk=iphone*]" = YES;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportsDocumentBrowser = YES;
+				LD_RUNPATH_SEARCH_PATHS = "@executable_path/Frameworks";
+				"LD_RUNPATH_SEARCH_PATHS[sdk=macosx*]" = "@executable_path/../Frameworks";
+				MARKETING_VERSION = 0.1;
+				PRODUCT_BUNDLE_IDENTIFIER = com.mazjap.Stagehand;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = auto;
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator macosx";
+				SUPPORTS_MACCATALYST = NO;
+				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
+				SUPPORTS_XR_DESIGNED_FOR_IPHONE_IPAD = NO;
+				SWIFT_APPROACHABLE_CONCURRENCY = YES;
+				SWIFT_DEFAULT_ACTOR_ISOLATION = MainActor;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 6.0;
+				TARGETED_DEVICE_FAMILY = 2;
+			};
+			name = Release;
+		};
+		83A72936C87D0DB5EC65E22A /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				COPY_PHASE_STRIP = NO;
+				DEAD_CODE_STRIPPING = YES;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
+				GCC_NO_COMMON_BLOCKS = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 27.0;
+				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
+				MACOSX_DEPLOYMENT_TARGET = 27.0;
+				STRING_CATALOG_GENERATE_SYMBOLS = YES;
+				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_VERSION = 6.0;
+			};
+			name = Release;
+		};
+		8BDCC5B1A90D29A094154329 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				COPY_PHASE_STRIP = NO;
+				DEAD_CODE_STRIPPING = YES;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				IPHONEOS_DEPLOYMENT_TARGET = 27.0;
+				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
+				MACOSX_DEPLOYMENT_TARGET = 27.0;
+				ONLY_ACTIVE_ARCH = YES;
+				STRING_CATALOG_GENERATE_SYMBOLS = YES;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "DEBUG $(inherited)";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 6.0;
+			};
+			name = Debug;
+		};
+		A033F53C065E5D8DA56518EB /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = HFR8F4BT7E;
+				GENERATE_INFOPLIST_FILE = YES;
+				MARKETING_VERSION = 0.1;
+				PRODUCT_BUNDLE_IDENTIFIER = com.mazjap.StagehandTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = auto;
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator macosx";
+				SUPPORTS_MACCATALYST = NO;
+				SWIFT_APPROACHABLE_CONCURRENCY = YES;
+				SWIFT_DEFAULT_ACTOR_ISOLATION = MainActor;
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 6.0;
+				TARGETED_DEVICE_FAMILY = 2;
+				"TEST_HOST[sdk=iphone*]" = "$(BUILT_PRODUCTS_DIR)/Stagehand.app/Stagehand";
+				"TEST_HOST[sdk=macosx*]" = "$(BUILT_PRODUCTS_DIR)/Stagehand.app/Contents/MacOS/Stagehand";
+			};
+			name = Debug;
+		};
+		D9B63BF35386F995C5F9D6A6 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = Stagehand/Stagehand.entitlements;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = HFR8F4BT7E;
+				ENABLE_APP_SANDBOX = NO;
+				ENABLE_HARDENED_RUNTIME = NO;
+				ENABLE_PREVIEWS = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = Stagehand/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = Stagehand;
+				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.developer-tools";
+				INFOPLIST_KEY_LSSupportsOpeningDocumentsInPlace = YES;
+				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphone*]" = YES;
+				"INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents[sdk=iphone*]" = YES;
+				"INFOPLIST_KEY_UILaunchScreen_Generation[sdk=iphone*]" = YES;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportsDocumentBrowser = YES;
+				LD_RUNPATH_SEARCH_PATHS = "@executable_path/Frameworks";
+				"LD_RUNPATH_SEARCH_PATHS[sdk=macosx*]" = "@executable_path/../Frameworks";
+				MARKETING_VERSION = 0.1;
+				PRODUCT_BUNDLE_IDENTIFIER = com.mazjap.Stagehand;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = auto;
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator macosx";
+				SUPPORTS_MACCATALYST = NO;
+				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
+				SUPPORTS_XR_DESIGNED_FOR_IPHONE_IPAD = NO;
+				SWIFT_APPROACHABLE_CONCURRENCY = YES;
+				SWIFT_DEFAULT_ACTOR_ISOLATION = MainActor;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 6.0;
+				TARGETED_DEVICE_FAMILY = 2;
+			};
+			name = Debug;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		1C86D54998374CC6285344A3 /* Build configuration list for PBXNativeTarget "StagehandTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				A033F53C065E5D8DA56518EB /* Debug */,
+				177F490E32A7FB93836ADFB6 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		89CB85BC6FE3C348504C7C1C /* Build configuration list for PBXNativeTarget "Stagehand" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				D9B63BF35386F995C5F9D6A6 /* Debug */,
+				33F0A1C75D3C60DC562B92EE /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		EF05FA0DCE69C9524F2A058C /* Build configuration list for PBXProject "Stagehand" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				8BDCC5B1A90D29A094154329 /* Debug */,
+				83A72936C87D0DB5EC65E22A /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+
+/* Begin XCLocalSwiftPackageReference section */
+		562CBF13F2017E9F8E6AA038 /* XCLocalSwiftPackageReference "Packages/StagehandCore" */ = {
+			isa = XCLocalSwiftPackageReference;
+			relativePath = Packages/StagehandCore;
+		};
+/* End XCLocalSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		FABD546FA7C975E49EB294E2 /* StagehandCore */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 562CBF13F2017E9F8E6AA038 /* XCLocalSwiftPackageReference "Packages/StagehandCore" */;
+			productName = StagehandCore;
+		};
+/* End XCSwiftPackageProductDependency section */
+	};
+	rootObject = FC8F43566AC4405ACCD1FC92 /* Project object */;
+}

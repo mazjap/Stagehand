@@ -1,0 +1,112 @@
+{
+  "devicetypes": [
+    {
+      "productFamily": "iPhone",
+      "bundlePath": "/Library/Developer/CoreSimulator/Profiles/DeviceTypes/iPhone Duo.simdevicetype",
+      "maxRuntimeVersion": 4294967295,
+      "maxRuntimeVersionString": "65535.255.255",
+      "identifier": "com.apple.CoreSimulator.SimDeviceType.iPhone-Duo",
+      "modelIdentifier": "iPhone19,4",
+      "minRuntimeVersionString": "27.1.0",
+      "minRuntimeVersion": 1769728,
+      "name": "iPhone Duo"
+    },
+    {
+      "productFamily": "iPhone",
+      "bundlePath": "/Library/Developer/CoreSimulator/Profiles/DeviceTypes/iPhone 17 Pro Max.simdevicetype",
+      "maxRuntimeVersion": 4294967295,
+      "maxRuntimeVersionString": "65535.255.255",
+      "identifier": "com.apple.CoreSimulator.SimDeviceType.iPhone-17-Pro-Max",
+      "modelIdentifier": "iPhone18,2",
+      "minRuntimeVersionString": "26.0.0",
+      "minRuntimeVersion": 1703936,
+      "name": "iPhone 17 Pro Max"
+    },
+    {
+      "productFamily": "iPad",
+      "bundlePath": "/Library/Developer/CoreSimulator/Profiles/DeviceTypes/iPad Pro 13-inch (M5).simdevicetype",
+      "maxRuntimeVersion": 4294967295,
+      "maxRuntimeVersionString": "65535.255.255",
+      "identifier": "com.apple.CoreSimulator.SimDeviceType.iPad-Pro-13-inch-M5-12GB",
+      "modelIdentifier": "iPad17,4",
+      "minRuntimeVersionString": "26.0.0",
+      "minRuntimeVersion": 1703936,
+      "name": "iPad Pro 13-inch (M5)"
+    },
+    {
+      "productFamily": "Apple Watch",
+      "bundlePath": "/Library/Developer/CoreSimulator/Profiles/DeviceTypes/Apple Watch Ultra 4 (49mm).simdevicetype",
+      "maxRuntimeVersion": 4294967295,
+      "maxRuntimeVersionString": "65535.255.255",
+      "identifier": "com.apple.CoreSimulator.SimDeviceType.Apple-Watch-Ultra-4-49mm",
+      "modelIdentifier": "Watch8,1",
+      "minRuntimeVersionString": "27.0.0",
+      "minRuntimeVersion": 1769472,
+      "name": "Apple Watch Ultra 4 (49mm)"
+    }
+  ],
+  "runtimes": [
+    {
+      "isAvailable": true,
+      "version": "27.0",
+      "isInternal": false,
+      "buildversion": "24A434",
+      "supportedArchitectures": [
+        "arm64"
+      ],
+      "supportedDeviceTypes": [
+        {
+          "name": "iPhone 17 Pro Max",
+          "productFamily": "iPhone",
+          "identifier": "com.apple.CoreSimulator.SimDeviceType.iPhone-17-Pro-Max"
+        },
+        {
+          "name": "iPad Pro 13-inch (M5)",
+          "productFamily": "iPad",
+          "identifier": "com.apple.CoreSimulator.SimDeviceType.iPad-Pro-13-inch-M5-12GB"
+        }
+      ],
+      "identifier": "com.apple.CoreSimulator.SimRuntime.iOS-27-0",
+      "platform": "iOS",
+      "name": "iOS 27.0"
+    },
+    {
+      "isAvailable": true,
+      "version": "27.1",
+      "isInternal": false,
+      "buildversion": "24A94401",
+      "supportedArchitectures": [
+        "arm64"
+      ],
+      "supportedDeviceTypes": [
+        {
+          "name": "iPhone Duo",
+          "productFamily": "iPhone",
+          "identifier": "com.apple.CoreSimulator.SimDeviceType.iPhone-Duo"
+        }
+      ],
+      "identifier": "com.apple.CoreSimulator.SimRuntime.iOS-27-1",
+      "platform": "iOS",
+      "name": "iOS 27.1"
+    },
+    {
+      "isAvailable": true,
+      "version": "27.0",
+      "isInternal": false,
+      "buildversion": "24R362",
+      "supportedArchitectures": [
+        "arm64"
+      ],
+      "supportedDeviceTypes": [
+        {
+          "name": "Apple Watch Ultra 4 (49mm)",
+          "productFamily": "Apple Watch",
+          "identifier": "com.apple.CoreSimulator.SimDeviceType.Apple-Watch-Ultra-4-49mm"
+        }
+      ],
+      "identifier": "com.apple.CoreSimulator.SimRuntime.watchOS-27-0",
+      "platform": "watchOS",
+      "name": "watchOS 27.0"
+    }
+  ]
+}

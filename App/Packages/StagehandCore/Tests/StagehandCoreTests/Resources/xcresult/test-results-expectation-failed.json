@@ -1,0 +1,63 @@
+{
+  "devices" : [
+    {
+      "architecture" : "arm64",
+      "deviceId" : "F2DE7EA9-F6F2-4E34-87B7-532E07C7E80C",
+      "deviceName" : "Stagehand iphone-dynamic-island-large",
+      "modelName" : "iPhone 17 Pro Max",
+      "osBuildNumber" : "24A434",
+      "osVersion" : "27.0",
+      "platform" : "iOS Simulator"
+    }
+  ],
+  "testNodes" : [
+    {
+      "children" : [
+        {
+          "children" : [
+            {
+              "children" : [
+                {
+                  "children" : [
+                    {
+                      "name" : "failed - stagehand.expectation: expected duoInner but captured phone (1320 × 2868)",
+                      "nodeType" : "Failure Message",
+                      "sourceLocation" : {
+                        "filePath" : "/Users/you/Developer/Stagehand/Fixtures/StagehandFixtureApp/StagehandFixtureAppScreenshots/FixtureScreenshots.swift",
+                        "lineNumber" : 31
+                      }
+                    }
+                  ],
+                  "duration" : "6s",
+                  "durationInSeconds" : 6.8762019872665405,
+                  "name" : "testLightScene()",
+                  "nodeIdentifier" : "FixtureScreenshots/testLightScene()",
+                  "nodeIdentifierURL" : "test://com.apple.xcode/StagehandFixtureApp/StagehandFixtureAppScreenshots/FixtureScreenshots/testLightScene",
+                  "nodeType" : "Test Case",
+                  "result" : "Failed"
+                }
+              ],
+              "name" : "FixtureScreenshots",
+              "nodeIdentifierURL" : "test://com.apple.xcode/StagehandFixtureApp/StagehandFixtureAppScreenshots/FixtureScreenshots",
+              "nodeType" : "Test Suite",
+              "result" : "Failed"
+            }
+          ],
+          "name" : "StagehandFixtureAppScreenshots",
+          "nodeIdentifierURL" : "test://com.apple.xcode/StagehandFixtureApp/StagehandFixtureAppScreenshots",
+          "nodeType" : "UI test bundle",
+          "result" : "Failed"
+        }
+      ],
+      "name" : "StagehandFixtureApp",
+      "nodeType" : "Test Plan",
+      "result" : "Failed"
+    }
+  ],
+  "testPlanConfigurations" : [
+    {
+      "configurationId" : "1",
+      "configurationName" : "Test Scheme Action"
+    }
+  ]
+}
