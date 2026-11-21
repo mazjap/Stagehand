@@ -19,7 +19,7 @@ The root of `https://github.com/mazjap/Stagehand` is a Swift package with no dep
 | `StagehandScene` | the **app target**, optional | reading the staged scene (`StagehandScene.decode`, `.current()`) |
 | `StagehandModel` | nothing directly | device classes and screenshot sizes, pulled in by the others |
 
-Add it by URL in Xcode (File › Add Package Dependencies…), pinned to a version tag once one is released (before that, the `main` branch). It changes the app's Xcode project and `Package.resolved`, so follow the app repository's rules for where that goes (a branch, a pull request), and ask if they don't say.
+Add it by URL in Xcode (File › Add Package Dependencies…), pinned to Up to Next Minor Version from `0.1.0` (before 1.0 a minor version can break the API, so this only takes patch releases). It changes the app's Xcode project and `Package.resolved`, so follow the app repository's rules for where that goes (a branch, a pull request), and ask if they don't say.
 
 Keep screenshot tests in their own UI test target and scheme. The scheme Stagehand is linked to must include that target in its test action.
 

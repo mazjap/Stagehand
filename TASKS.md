@@ -86,7 +86,8 @@ The goal: TrekPoint's English iPhone (6.9-inch) and iPad (13-inch) screenshots c
   - Builds for iOS, watchOS and macOS with Xcode 27.1. The Xcode-Beta build is still to do on a machine that has it.
 - [x] **3.4 The fixture app** (`Fixtures/StagehandFixtureApp`): a tiny SwiftUI iOS app with two scenes (one dark, one light) and a screenshot UI test target that uses the kit.
   - Done when its tests pass on an iPhone 17 Pro Max simulator and its result bundle has both captures and their metadata.
-- [ ] **3.5 Release the kit as `v0.1.0`,** when the user asks. Other apps add the kit by URL, so the repository has to be on GitHub first (this checkout has no `.git` as of November 2026).
+- [x] **3.5 Release the kit as `v0.1.0`,** when the user asks. Other apps add the kit by URL, so the repository has to be on GitHub first.
+  - Tagged on November 21, 2026, from the same kit TrekPoint and Flask Master were already using from `main` (`411413f`).
 - [x] **3.6 Running tools:** `ProcessRunnerProvider` (the live one uses `Process`, streams output and cancels the whole process group; tests use a fake), and parsing `xcodebuild -list -json` and `xcrun simctl list -j`.
   - Done when the parsers have tests with recorded output.
 - [ ] **3.7 The link to an app:** choose an `.xcodeproj` or `.xcworkspace` (kept as a bookmark), its scheme and test target, and a simulator type, runtime and developer directory for each device class. It's saved in `project.json`.
@@ -105,13 +106,15 @@ The goal: TrekPoint's English iPhone (6.9-inch) and iPad (13-inch) screenshots c
 - [x] **3.10 The run UI:** ⌘R runs every capture, cells show progress as each run finishes, Recapture on a cell (`-only-testing:`), and a failed cell opens its result bundle in Xcode.
 - [x] **3.11 The end-to-end test:** `EndToEndTests` (with `STAGEHAND_E2E=1`) has the runner build and run the fixture app's tests and import its captures.
   - Done when it passes on the Mac.
-- [ ] **3.12 Move TrekPoint onto the kit,** in TrekPoint's repository and under its CLAUDE.md (ask whether the project file change goes straight to the release branch or into a pull request).
+- [x] **3.12 Move TrekPoint onto the kit,** in TrekPoint's repository and under its CLAUDE.md (ask whether the project file change goes straight to the release branch or into a pull request).
   - Add StagehandCapture to `TrekPointScreenshots` only. The app keeps reading its own scene.
   - Replace `ScreenshotTestCase.capture`'s launching, waiting, display choosing and saving, including `appScreenshot()`, with the kit's. Keep `-ui-testing -app-store-preview`, `TREKPOINT_SCREENSHOT_SCENE`, readiness on the render report's `staged: true`, and the 9-second settle.
   - Keep the four folders under `src/Pixelmator Files/AppStoreConnect/Source Images/` with a custom folder layout.
   - Done when the screenshot tests save the same images as before on the iPhone 17 Pro Max, the iPad Pro 13-inch and both Duo displays, and Stagehand imports a run of them.
-- [ ] **3.13 Move Flask Master onto the kit.** Its screenshot tests use `ScreenshotTestCase` from MJGameKit's MJScreenshotTesting, whose `capture(scene:named:waitingFor:timeout:settle:)` matches the kit's, so its tests keep their call sites. Either Flask Master's `FlaskMasterScreenshots` target takes StagehandCapture directly, or MJScreenshotTesting is rebuilt on the kit (so every MJGameKit game gets it in a package release). Its folders (`AppStoreScreenshots/iPhone`, `iPad`) stay with a custom layout.
+  - Done on TrekPoint's `feature/stagehand-screenshots` branch (`6f37c95`), which isn't pushed yet.
+- [x] **3.13 Move Flask Master onto the kit.** Its screenshot tests use `ScreenshotTestCase` from MJGameKit's MJScreenshotTesting, whose `capture(scene:named:waitingFor:timeout:settle:)` matches the kit's, so its tests keep their call sites. Either Flask Master's `FlaskMasterScreenshots` target takes StagehandCapture directly, or MJScreenshotTesting is rebuilt on the kit (so every MJGameKit game gets it in a package release). Its folders (`AppStoreScreenshots/iPhone`, `iPad`) stay with a custom layout.
   - Done when its screenshots import into its Stagehand project.
+  - Done in Flask Master's `5561bab` (on its `main`), with its `FlaskMasterScreenshots` target taking StagehandCapture directly.
 
 ## 4. Sets, variants and every device
 

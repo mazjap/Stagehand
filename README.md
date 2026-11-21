@@ -125,7 +125,7 @@ The kit has three products:
 
 ### Adding it
 
-In Xcode, **File › Add Package Dependencies…**, enter `https://github.com/mazjap/Stagehand`, and add `StagehandCapture` to your screenshot UI test target only (and `StagehandScene` to your app, if you want it). Pin a version tag once one is released; until then, use the `main` branch.
+In Xcode, **File › Add Package Dependencies…**, enter `https://github.com/mazjap/Stagehand`, and add `StagehandCapture` to your screenshot UI test target only (and `StagehandScene` to your app, if you want it). Choose **Up to Next Minor Version** from `0.1.0`: before 1.0, a minor version can break the API, so this only picks up patch releases.
 
 Keep screenshot tests in a test target and scheme of their own, so they never run with your other UI tests.
 
